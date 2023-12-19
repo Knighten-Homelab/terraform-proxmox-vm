@@ -1,10 +1,13 @@
 # ProxMox VM Single Node (PowerDNS Record + AWX Registration)
 
+[![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Johnny-Knighten/terraform-homelab-pve-vm/lint-and-test.yml?logo=github&label=lint%20and%20test%20-%20status)
+](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/actions/workflows/lint-and-test.yml)
+
 This Terraform module will create a single VM on a ProxMox cluster. It will also create a DNS A record on a local PowerDNS server and also register the host on AWX.
 
 The module assumes that you have a service account called `ansible` baked into your PVE template which has an assigned SSH key. The `ansible` service account is used by PVE to finalize VM setup and by AWX to connect to the host and run playbooks. In the future this may change to be less opinionated.
 
-Typically I create a PVE template using Packer that setups the `ansible` service account and also installs the SSH key. See the [packer](https://gitlab.knighten.io/homelab-infrastructure/packer) subgroup for more details.
+Typically I create a PVE template using Packer that setups the `ansible` service account and also installs the SSH key.
 
 ## Required Providers
 
