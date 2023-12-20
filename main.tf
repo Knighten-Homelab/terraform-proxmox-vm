@@ -16,11 +16,6 @@ terraform {
     }
   }
 }
-provider "proxmox" {
-  pm_user     = var.pve_username
-  pm_password = var.pve_password
-  pm_api_url  = var.pve_cluster_url
-}
 
 resource "proxmox_vm_qemu" "pve_vm" {
   name        = var.pve_vm_name
@@ -59,23 +54,12 @@ resource "proxmox_vm_qemu" "pve_vm" {
   }
 }
 
-provider "powerdns" {
-  api_key    = var.pdns_api_key
-  server_url = var.pdns_url
-}
-
 resource "powerdns_record" "a_record" {
   zone    = "${var.pdns_zone}."
   name    = "${var.pdns_record_name}.${var.pdns_zone}."
   type    = "A"
   ttl     = 60
   records = [proxmox_vm_qemu.pve_vm.default_ipv4_address]
-}
-
-provider "awx" {
-  hostname = var.awx_url
-  username = var.awx_account_username
-  password = var.awx_account_password
 }
 
 data "awx_organization" "homelab" {
