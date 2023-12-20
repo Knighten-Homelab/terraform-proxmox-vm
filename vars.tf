@@ -1,3 +1,12 @@
+############################
+#  Required Auth Variables #
+############################
+
+variable "ansible_service_account_ssh_key" {
+  type        = string
+  description = "SSH key for the ansible service account"
+}
+
 #################
 # PVE Variables #
 #################
