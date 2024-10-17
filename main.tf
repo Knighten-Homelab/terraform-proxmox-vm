@@ -21,10 +21,15 @@ resource "proxmox_vm_qemu" "pve_vm" {
   ssh_user        = "ansible"
   ssh_private_key = var.ansible_service_account_ssh_key
 
-  disk {
-    size    = var.pve_vm_disk_size
-    type    = "scsi"
-    storage = var.pve_vm_disk_storage_location
+  disks {
+    scsi {
+      scsi0 {
+        disk {
+          size    = var.pve_vm_disk_size
+          storage = var.pve_vm_disk_storage_location
+        }
+      }
+    }
   }
 
   network {
