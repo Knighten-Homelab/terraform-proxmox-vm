@@ -1,22 +1,3 @@
-terraform {
-  required_version = "1.6.6"
-
-  required_providers {
-    proxmox = {
-      source  = "telmate/proxmox"
-      version = "2.9.14"
-    }
-    powerdns = {
-      source  = "pan-net/powerdns"
-      version = "1.5.0"
-    }
-    awx = {
-      source  = "denouche/awx"
-      version = "0.19.0"
-    }
-  }
-}
-
 resource "proxmox_vm_qemu" "pve_vm" {
   name        = var.pve_vm_name
   target_node = var.pve_node
@@ -40,10 +21,15 @@ resource "proxmox_vm_qemu" "pve_vm" {
   ssh_user        = "ansible"
   ssh_private_key = var.ansible_service_account_ssh_key
 
-  disk {
-    size    = var.pve_vm_disk_size
-    type    = "scsi"
-    storage = var.pve_vm_disk_storage_location
+  disks {
+    scsi {
+      scsi0 {
+        disk {
+          size    = var.pve_vm_disk_size
+          storage = var.pve_vm_disk_storage_location
+        }
+      }
+    }
   }
 
   network {
