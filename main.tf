@@ -7,13 +7,19 @@ resource "proxmox_vm_qemu" "pve_vm" {
   full_clone = var.pve_is_clone ? var.pve_vm_full_clone : null
   clone      = var.pve_is_clone ? var.pve_template : null
 
-  onboot     = var.pve_vm_boot_on_start
-  startup    = var.pve_vm_startup_options
-  cores      = var.pve_vm_core_count
-  desc       = var.pve_vm_desc
-  sockets    = 1
-  cpu        = "host"
-  memory     = var.pve_vm_memory
+  # CPU Options
+  cores   = var.pve_vm_core_count
+  sockets = var.pve_vm_sockets
+  cpu     = var.pve_vm_cpu_type
+
+  # Memory Options
+  memory  = var.pve_vm_memory_size
+  balloon = var.pve_memory_balloon
+
+  onboot  = var.pve_vm_boot_on_start
+  startup = var.pve_vm_startup_options
+  desc    = var.pve_vm_desc
+
   scsihw     = "virtio-scsi-pci"
   bootdisk   = "scsi0"
   agent      = 1

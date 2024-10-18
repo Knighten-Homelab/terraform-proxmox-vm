@@ -43,6 +43,40 @@ variable "pve_vm_full_clone" {
   default     = true
 }
 
+# CPU Options
+
+variable "pve_vm_core_count" {
+  type        = string
+  description = "number of cores to allocate to the VM"
+  default     = "2"
+}
+
+variable "pve_vm_cpu_type" {
+  type        = string
+  description = "type of CPU to use for the VM"
+  default     = "host"
+}
+
+variable "pve_vm_sockets" {
+  type        = string
+  description = "number of sockets to allocate to the VM"
+  default     = "1"
+}
+
+# Memory Options
+
+variable "pve_vm_memory_size" {
+  type        = number
+  description = "amount of memory to allocate to the VM in MB"
+  default     = 2048
+}
+
+variable "pve_memory_balloon" {
+  type        = number
+  description = "whether or not to use memory ballooning"
+  default     = 0
+}
+
 variable "pve_vm_desc" {
   type        = string
   description = "description of the VM"
@@ -105,17 +139,9 @@ variable "pve_vm_packet_queue_count" {
   default     = "1"
 }
 
-variable "pve_vm_core_count" {
-  type        = string
-  description = "number of cores to allocate to the VM"
-  default     = "2"
-}
 
-variable "pve_vm_memory" {
-  type        = string
-  description = "amount of memory to allocate to the VM in MB"
-  default     = "2048"
-}
+
+
 
 variable "pve_vm_disk_size" {
   type        = string
