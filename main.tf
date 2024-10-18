@@ -44,9 +44,11 @@ resource "proxmox_vm_qemu" "pve_vm" {
   ipconfig0              = var.pve_use_preprovisioner ? (var.pve_vm_use_static_ip ? format("ip=%s,gw=%s", join("/", [var.pve_vm_ip, var.pve_vm_subnet_network_bits]), var.pve_vm_gateway) : "ip=dhcp") : null
   nameserver             = var.pve_use_preprovisioner ? var.pve_vm_dns_server : null
 
-  scsihw = "virtio-scsi-pci"
-  agent  = 1
+  agent = 1
 
+  # Disk Options
+
+  scsihw = var.pve_vm_scsihw
   disks {
     dynamic "ide" {
       for_each = !var.pve_is_clone ? [1] : []

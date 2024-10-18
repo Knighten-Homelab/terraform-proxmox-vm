@@ -192,6 +192,12 @@ variable "pve_vm_disk_storage_location" {
   default     = "local-zfs"
 }
 
+variable "pve_vm_scsihw" {
+  type        = string
+  description = "scsi hardware to use for the VM"
+  default     = "virtio-scsi-pci"
+}
+
 #################
 # AWX Variables #
 #################
