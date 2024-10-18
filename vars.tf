@@ -1,15 +1,8 @@
-############################
-#  Required Auth Variables #
-############################
-
-variable "ansible_service_account_ssh_key" {
-  type        = string
-  description = "SSH key for the ansible service account"
-}
-
 #################
 # PVE Variables #
 #################
+
+# Minimum Required Variables
 
 variable "pve_node" {
   type        = string
@@ -21,9 +14,12 @@ variable "pve_vm_name" {
   description = "name of the VM to create"
 }
 
-variable "pve_template" {
-  type        = string
-  description = "name of the PVE template to clone"
+# Metadata Variables
+
+variable "pve_vm_id" {
+  type        = number
+  description = "id of the VM"
+  default     = 0
 }
 
 variable "pve_vm_desc" {
@@ -32,11 +28,33 @@ variable "pve_vm_desc" {
   default     = ""
 }
 
-variable "pve_vm_full_clone" {
-  type        = string
-  description = "whether or not to do a full clone"
-  default     = "true"
+# Clone/Template Variables 
+
+variable "pve_is_clone" {
+  type        = bool
+  description = "Flag to determine if the VM is a clone or not (based off iso)"
+  default     = true
 }
+
+variable "pve_template" {
+  type        = string
+  description = "name of the PVE template to clone"
+  default     = "ubuntu-server-22-04-base-template-homela"
+}
+
+variable "pve_vm_full_clone" {
+  type        = bool
+  description = "whether or not to do a full clone of the template"
+  default     = true
+}
+
+variable "pve_vm_iso" {
+  type        = string
+  description = "iso to use for the VM"
+  default     = ""
+}
+
+# Boot Options
 
 variable "pve_vm_boot_on_start" {
   type        = bool
@@ -48,6 +66,86 @@ variable "pve_vm_startup_options" {
   type        = string
   description = "startup options seperated via comma: boot order (order=), startup delay(up=), and shutdown delay(down=)"
   default     = "order=any"
+}
+
+variable "pve_vm_boot_disk" {
+  type        = string
+  description = "boot disk for the VM"
+  default     = "scsi0"
+
+}
+
+# CPU Options
+
+variable "pve_vm_core_count" {
+  type        = string
+  description = "number of cores to allocate to the VM"
+  default     = "2"
+}
+
+variable "pve_vm_cpu_type" {
+  type        = string
+  description = "type of CPU to use for the VM"
+  default     = "host"
+}
+
+variable "pve_vm_sockets" {
+  type        = string
+  description = "number of sockets to allocate to the VM"
+  default     = "1"
+}
+
+# Memory Options
+
+variable "pve_vm_memory_size" {
+  type        = number
+  description = "amount of memory to allocate to the VM in MB"
+  default     = 2048
+}
+
+variable "pve_memory_balloon" {
+  type        = number
+  description = "whether or not to use memory ballooning"
+  default     = 0
+}
+
+# Network Options
+
+variable "pve_vm_networks" {
+  type = list(object({
+    model  = string
+    bridge = string
+    tag    = optional(string)
+    queues = optional(string)
+  }))
+  description = "List of network configurations for the VM"
+  default = [
+    {
+      model  = "virtio"
+      bridge = "vmbr0"
+      tag    = "-1"
+      queues = "1"
+    }
+  ]
+}
+
+# Cloud-Init Options
+
+variable "pve_use_preprovisioner" {
+  type        = bool
+  description = "whether or not to use the preprovisioner"
+  default     = true
+}
+
+variable "pve_ssh_user" {
+  type        = string
+  description = "ssh user to use for the VM"
+  default     = "ansible"
+}
+
+variable "pve_ssh_private_key" {
+  type        = string
+  description = "ssh private key to use for the VM"
 }
 
 variable "pve_vm_use_static_ip" {
@@ -80,29 +178,7 @@ variable "pve_vm_dns_server" {
   default     = ""
 }
 
-variable "pve_vm_vlan_tag" {
-  type        = string
-  description = "VLAN tag to use for the VM "
-  default     = "-1"
-}
-
-variable "pve_vm_packet_queue_count" {
-  type        = string
-  description = "number of VM packet queues"
-  default     = "1"
-}
-
-variable "pve_vm_core_count" {
-  type        = string
-  description = "number of cores to allocate to the VM"
-  default     = "2"
-}
-
-variable "pve_vm_memory" {
-  type        = string
-  description = "amount of memory to allocate to the VM in MB"
-  default     = "2048"
-}
+# Disk Configuration
 
 variable "pve_vm_disk_size" {
   type        = string
@@ -116,9 +192,23 @@ variable "pve_vm_disk_storage_location" {
   default     = "local-zfs"
 }
 
+variable "pve_vm_scsihw" {
+  type        = string
+  description = "scsi hardware to use for the VM"
+  default     = "virtio-scsi-pci"
+}
+
+# Agent Options
+
+variable "pve_vm_agent" {
+  type        = number
+  description = "whether or not to use the agent"
+  default     = 1
+}
+
 #################
 # AWX Variables #
-##################
+#################
 
 variable "awx_organization" {
   type        = string

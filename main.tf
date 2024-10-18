@@ -1,27 +1,67 @@
 resource "proxmox_vm_qemu" "pve_vm" {
+  # Minimum Required Fields
   name        = var.pve_vm_name
   target_node = var.pve_node
-  full_clone  = var.pve_vm_full_clone
-  clone       = var.pve_template
-  onboot      = var.pve_vm_boot_on_start
-  startup     = var.pve_vm_startup_options
-  cores       = var.pve_vm_core_count
-  desc        = var.pve_vm_desc
-  sockets     = 1
-  cpu         = "host"
-  memory      = var.pve_vm_memory
-  scsihw      = "virtio-scsi-pci"
-  bootdisk    = "scsi0"
-  agent       = 1
-  ipconfig0   = var.pve_vm_use_static_ip ? format("ip=%s,gw=%s", join("/", [var.pve_vm_ip, var.pve_vm_subnet_network_bits]), var.pve_vm_gateway) : "ip=dhcp"
-  nameserver  = var.pve_vm_dns_server
-  os_type     = "cloud-init"
 
-  # SSH (Cloud-Init Used To Make This User)
-  ssh_user        = "ansible"
-  ssh_private_key = var.ansible_service_account_ssh_key
+  # Metadata Fields
+  vmid = var.pve_vm_id
+  desc = var.pve_vm_desc
 
+  # Template/Clone Fields
+  full_clone = var.pve_is_clone ? var.pve_vm_full_clone : null
+  clone      = var.pve_is_clone ? var.pve_template : null
+
+  # Boot Options
+  onboot   = var.pve_vm_boot_on_start
+  startup  = var.pve_vm_startup_options
+  bootdisk = var.pve_vm_boot_disk
+
+  # CPU Options
+  cores   = var.pve_vm_core_count
+  sockets = var.pve_vm_sockets
+  cpu     = var.pve_vm_cpu_type
+
+  # Memory Options
+  memory  = var.pve_vm_memory_size
+  balloon = var.pve_memory_balloon
+
+  # Network Options
+  dynamic "network" {
+    for_each = var.pve_vm_networks
+    content {
+      model  = network.value.model
+      bridge = network.value.bridge
+      tag    = lookup(network.value, "tag", null)
+      queues = lookup(network.value, "queues", null)
+    }
+  }
+
+  # Cloud-Init Options
+  os_type                = var.pve_use_preprovisioner ? "cloud-init" : null
+  define_connection_info = var.pve_use_preprovisioner
+  ssh_user               = var.pve_use_preprovisioner ? var.pve_ssh_user : null
+  ssh_private_key        = var.pve_use_preprovisioner ? var.pve_ssh_private_key : null
+  ipconfig0              = var.pve_use_preprovisioner ? (var.pve_vm_use_static_ip ? format("ip=%s,gw=%s", join("/", [var.pve_vm_ip, var.pve_vm_subnet_network_bits]), var.pve_vm_gateway) : "ip=dhcp") : null
+  nameserver             = var.pve_use_preprovisioner ? var.pve_vm_dns_server : null
+
+  # Agent Options
+  agent = var.pve_vm_agent
+
+  # Disk Options
+
+  scsihw = var.pve_vm_scsihw
   disks {
+    dynamic "ide" {
+      for_each = !var.pve_is_clone ? [1] : []
+      content {
+        ide0 {
+          cdrom {
+            iso = var.pve_vm_iso
+          }
+        }
+      }
+    }
+
     scsi {
       scsi0 {
         disk {
@@ -30,13 +70,6 @@ resource "proxmox_vm_qemu" "pve_vm" {
         }
       }
     }
-  }
-
-  network {
-    model  = "virtio"
-    bridge = "vmbr0"
-    tag    = var.pve_vm_vlan_tag
-    queues = var.pve_vm_packet_queue_count
   }
 }
 
