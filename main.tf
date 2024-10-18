@@ -11,6 +11,11 @@ resource "proxmox_vm_qemu" "pve_vm" {
   full_clone = var.pve_is_clone ? var.pve_vm_full_clone : null
   clone      = var.pve_is_clone ? var.pve_template : null
 
+  # Boot Options
+  onboot   = var.pve_vm_boot_on_start
+  startup  = var.pve_vm_startup_options
+  bootdisk = var.pve_vm_boot_disk
+
   # CPU Options
   cores   = var.pve_vm_core_count
   sockets = var.pve_vm_sockets
@@ -39,11 +44,8 @@ resource "proxmox_vm_qemu" "pve_vm" {
   ipconfig0              = var.pve_use_preprovisioner ? (var.pve_vm_use_static_ip ? format("ip=%s,gw=%s", join("/", [var.pve_vm_ip, var.pve_vm_subnet_network_bits]), var.pve_vm_gateway) : "ip=dhcp") : null
   nameserver             = var.pve_use_preprovisioner ? var.pve_vm_dns_server : null
 
-  onboot   = var.pve_vm_boot_on_start
-  startup  = var.pve_vm_startup_options
-  scsihw   = "virtio-scsi-pci"
-  bootdisk = "scsi0"
-  agent    = 1
+  scsihw = "virtio-scsi-pci"
+  agent  = 1
 
   disks {
     scsi {

@@ -48,6 +48,27 @@ variable "pve_vm_full_clone" {
   default     = true
 }
 
+# Boot Options
+
+variable "pve_vm_boot_on_start" {
+  type        = bool
+  description = "whether or not to boot the VM on start"
+  default     = false
+}
+
+variable "pve_vm_startup_options" {
+  type        = string
+  description = "startup options seperated via comma: boot order (order=), startup delay(up=), and shutdown delay(down=)"
+  default     = "order=any"
+}
+
+variable "pve_vm_boot_disk" {
+  type        = string
+  description = "boot disk for the VM"
+  default     = "scsi0"
+
+}
+
 # CPU Options
 
 variable "pve_vm_core_count" {
@@ -151,17 +172,6 @@ variable "pve_vm_dns_server" {
   default     = ""
 }
 
-variable "pve_vm_boot_on_start" {
-  type        = bool
-  description = "whether or not to boot the VM on start"
-  default     = false
-}
-
-variable "pve_vm_startup_options" {
-  type        = string
-  description = "startup options seperated via comma: boot order (order=), startup delay(up=), and shutdown delay(down=)"
-  default     = "order=any"
-}
 
 variable "pve_vm_disk_size" {
   type        = string
