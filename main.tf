@@ -48,6 +48,17 @@ resource "proxmox_vm_qemu" "pve_vm" {
   agent  = 1
 
   disks {
+    dynamic "ide" {
+      for_each = !var.pve_is_clone ? [1] : []
+      content {
+        ide0 {
+          cdrom {
+            iso = var.pve_vm_iso
+          }
+        }
+      }
+    }
+
     scsi {
       scsi0 {
         disk {

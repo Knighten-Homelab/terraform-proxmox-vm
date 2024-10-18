@@ -48,6 +48,12 @@ variable "pve_vm_full_clone" {
   default     = true
 }
 
+variable "pve_vm_iso" {
+  type        = string
+  description = "iso to use for the VM"
+  default     = ""
+}
+
 # Boot Options
 
 variable "pve_vm_boot_on_start" {
@@ -172,6 +178,7 @@ variable "pve_vm_dns_server" {
   default     = ""
 }
 
+# Disk Configuration
 
 variable "pve_vm_disk_size" {
   type        = string
