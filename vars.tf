@@ -11,6 +11,8 @@ variable "ansible_service_account_ssh_key" {
 # PVE Variables #
 #################
 
+# Minimum Required Variables
+
 variable "pve_node" {
   type        = string
   description = "name of the ProxMox node to create the VM on"
@@ -21,9 +23,24 @@ variable "pve_vm_name" {
   description = "name of the VM to create"
 }
 
+# Clone/Template Variables 
+
+variable "pve_is_clone" {
+  type        = bool
+  description = "Flag to determine if the VM is a clone or not (based off iso)"
+  default     = true
+}
+
 variable "pve_template" {
   type        = string
   description = "name of the PVE template to clone"
+  default     = "ubuntu-server-22-04-base-template-homela"
+}
+
+variable "pve_vm_full_clone" {
+  type        = bool
+  description = "whether or not to do a full clone of the template"
+  default     = true
 }
 
 variable "pve_vm_desc" {
@@ -32,11 +49,7 @@ variable "pve_vm_desc" {
   default     = ""
 }
 
-variable "pve_vm_full_clone" {
-  type        = string
-  description = "whether or not to do a full clone"
-  default     = "true"
-}
+
 
 variable "pve_vm_boot_on_start" {
   type        = bool

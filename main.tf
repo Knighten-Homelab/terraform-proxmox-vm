@@ -1,21 +1,25 @@
 resource "proxmox_vm_qemu" "pve_vm" {
+  # Minimum Required Fields
   name        = var.pve_vm_name
   target_node = var.pve_node
-  full_clone  = var.pve_vm_full_clone
-  clone       = var.pve_template
-  onboot      = var.pve_vm_boot_on_start
-  startup     = var.pve_vm_startup_options
-  cores       = var.pve_vm_core_count
-  desc        = var.pve_vm_desc
-  sockets     = 1
-  cpu         = "host"
-  memory      = var.pve_vm_memory
-  scsihw      = "virtio-scsi-pci"
-  bootdisk    = "scsi0"
-  agent       = 1
-  ipconfig0   = var.pve_vm_use_static_ip ? format("ip=%s,gw=%s", join("/", [var.pve_vm_ip, var.pve_vm_subnet_network_bits]), var.pve_vm_gateway) : "ip=dhcp"
-  nameserver  = var.pve_vm_dns_server
-  os_type     = "cloud-init"
+
+  # Template/Clone Fields
+  full_clone = var.pve_is_clone ? var.pve_vm_full_clone : null
+  clone      = var.pve_is_clone ? var.pve_template : null
+
+  onboot     = var.pve_vm_boot_on_start
+  startup    = var.pve_vm_startup_options
+  cores      = var.pve_vm_core_count
+  desc       = var.pve_vm_desc
+  sockets    = 1
+  cpu        = "host"
+  memory     = var.pve_vm_memory
+  scsihw     = "virtio-scsi-pci"
+  bootdisk   = "scsi0"
+  agent      = 1
+  ipconfig0  = var.pve_vm_use_static_ip ? format("ip=%s,gw=%s", join("/", [var.pve_vm_ip, var.pve_vm_subnet_network_bits]), var.pve_vm_gateway) : "ip=dhcp"
+  nameserver = var.pve_vm_dns_server
+  os_type    = "cloud-init"
 
   # SSH (Cloud-Init Used To Make This User)
   ssh_user        = "ansible"
