@@ -198,6 +198,14 @@ variable "pve_vm_scsihw" {
   default     = "virtio-scsi-pci"
 }
 
+# Agent Options
+
+variable "pve_vm_agent" {
+  type        = number
+  description = "whether or not to use the agent"
+  default     = 1
+}
+
 #################
 # AWX Variables #
 #################
