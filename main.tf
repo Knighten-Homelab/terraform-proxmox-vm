@@ -3,6 +3,10 @@ resource "proxmox_vm_qemu" "pve_vm" {
   name        = var.pve_vm_name
   target_node = var.pve_node
 
+  # Metadata Fields
+  vmid = var.pve_vm_id
+  desc = var.pve_vm_desc
+
   # Template/Clone Fields
   full_clone = var.pve_is_clone ? var.pve_vm_full_clone : null
   clone      = var.pve_is_clone ? var.pve_template : null
@@ -37,7 +41,6 @@ resource "proxmox_vm_qemu" "pve_vm" {
 
   onboot   = var.pve_vm_boot_on_start
   startup  = var.pve_vm_startup_options
-  desc     = var.pve_vm_desc
   scsihw   = "virtio-scsi-pci"
   bootdisk = "scsi0"
   agent    = 1

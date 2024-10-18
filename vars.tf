@@ -14,6 +14,20 @@ variable "pve_vm_name" {
   description = "name of the VM to create"
 }
 
+# Metadata Variables
+
+variable "pve_vm_id" {
+  type        = number
+  description = "id of the VM"
+  default     = 0
+}
+
+variable "pve_vm_desc" {
+  type        = string
+  description = "description of the VM"
+  default     = ""
+}
+
 # Clone/Template Variables 
 
 variable "pve_is_clone" {
@@ -105,7 +119,6 @@ variable "pve_ssh_user" {
 variable "pve_ssh_private_key" {
   type        = string
   description = "ssh private key to use for the VM"
-  default     = ""
 }
 
 variable "pve_vm_use_static_ip" {
@@ -135,13 +148,6 @@ variable "pve_vm_gateway" {
 variable "pve_vm_dns_server" {
   type        = string
   description = "ip of vm's dns server"
-  default     = ""
-}
-
-
-variable "pve_vm_desc" {
-  type        = string
-  description = "description of the VM"
   default     = ""
 }
 
