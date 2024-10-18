@@ -1,12 +1,3 @@
-############################
-#  Required Auth Variables #
-############################
-
-variable "ansible_service_account_ssh_key" {
-  type        = string
-  description = "SSH key for the ansible service account"
-}
-
 #################
 # PVE Variables #
 #################
@@ -77,24 +68,44 @@ variable "pve_memory_balloon" {
   default     = 0
 }
 
-variable "pve_vm_desc" {
-  type        = string
-  description = "description of the VM"
-  default     = ""
+# Network Options
+
+variable "pve_vm_networks" {
+  type = list(object({
+    model  = string
+    bridge = string
+    tag    = optional(string)
+    queues = optional(string)
+  }))
+  description = "List of network configurations for the VM"
+  default = [
+    {
+      model  = "virtio"
+      bridge = "vmbr0"
+      tag    = "-1"
+      queues = "1"
+    }
+  ]
 }
 
+# Cloud-Init Options
 
-
-variable "pve_vm_boot_on_start" {
+variable "pve_use_preprovisioner" {
   type        = bool
-  description = "whether or not to boot the VM on start"
-  default     = false
+  description = "whether or not to use the preprovisioner"
+  default     = true
 }
 
-variable "pve_vm_startup_options" {
+variable "pve_ssh_user" {
   type        = string
-  description = "startup options seperated via comma: boot order (order=), startup delay(up=), and shutdown delay(down=)"
-  default     = "order=any"
+  description = "ssh user to use for the VM"
+  default     = "ansible"
+}
+
+variable "pve_ssh_private_key" {
+  type        = string
+  description = "ssh private key to use for the VM"
+  default     = ""
 }
 
 variable "pve_vm_use_static_ip" {
@@ -127,21 +138,24 @@ variable "pve_vm_dns_server" {
   default     = ""
 }
 
-variable "pve_vm_vlan_tag" {
+
+variable "pve_vm_desc" {
   type        = string
-  description = "VLAN tag to use for the VM "
-  default     = "-1"
+  description = "description of the VM"
+  default     = ""
 }
 
-variable "pve_vm_packet_queue_count" {
-  type        = string
-  description = "number of VM packet queues"
-  default     = "1"
+variable "pve_vm_boot_on_start" {
+  type        = bool
+  description = "whether or not to boot the VM on start"
+  default     = false
 }
 
-
-
-
+variable "pve_vm_startup_options" {
+  type        = string
+  description = "startup options seperated via comma: boot order (order=), startup delay(up=), and shutdown delay(down=)"
+  default     = "order=any"
+}
 
 variable "pve_vm_disk_size" {
   type        = string
@@ -157,7 +171,7 @@ variable "pve_vm_disk_storage_location" {
 
 #################
 # AWX Variables #
-##################
+#################
 
 variable "awx_organization" {
   type        = string

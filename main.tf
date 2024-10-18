@@ -16,20 +16,31 @@ resource "proxmox_vm_qemu" "pve_vm" {
   memory  = var.pve_vm_memory_size
   balloon = var.pve_memory_balloon
 
-  onboot  = var.pve_vm_boot_on_start
-  startup = var.pve_vm_startup_options
-  desc    = var.pve_vm_desc
+  # Network Options
+  dynamic "network" {
+    for_each = var.pve_vm_networks
+    content {
+      model  = network.value.model
+      bridge = network.value.bridge
+      tag    = lookup(network.value, "tag", null)
+      queues = lookup(network.value, "queues", null)
+    }
+  }
 
-  scsihw     = "virtio-scsi-pci"
-  bootdisk   = "scsi0"
-  agent      = 1
-  ipconfig0  = var.pve_vm_use_static_ip ? format("ip=%s,gw=%s", join("/", [var.pve_vm_ip, var.pve_vm_subnet_network_bits]), var.pve_vm_gateway) : "ip=dhcp"
-  nameserver = var.pve_vm_dns_server
-  os_type    = "cloud-init"
+  # Cloud-Init Options
+  os_type                = var.pve_use_preprovisioner ? "cloud-init" : null
+  define_connection_info = var.pve_use_preprovisioner
+  ssh_user               = var.pve_use_preprovisioner ? var.pve_ssh_user : null
+  ssh_private_key        = var.pve_use_preprovisioner ? var.pve_ssh_private_key : null
+  ipconfig0              = var.pve_use_preprovisioner ? (var.pve_vm_use_static_ip ? format("ip=%s,gw=%s", join("/", [var.pve_vm_ip, var.pve_vm_subnet_network_bits]), var.pve_vm_gateway) : "ip=dhcp") : null
+  nameserver             = var.pve_use_preprovisioner ? var.pve_vm_dns_server : null
 
-  # SSH (Cloud-Init Used To Make This User)
-  ssh_user        = "ansible"
-  ssh_private_key = var.ansible_service_account_ssh_key
+  onboot   = var.pve_vm_boot_on_start
+  startup  = var.pve_vm_startup_options
+  desc     = var.pve_vm_desc
+  scsihw   = "virtio-scsi-pci"
+  bootdisk = "scsi0"
+  agent    = 1
 
   disks {
     scsi {
@@ -40,13 +51,6 @@ resource "proxmox_vm_qemu" "pve_vm" {
         }
       }
     }
-  }
-
-  network {
-    model  = "virtio"
-    bridge = "vmbr0"
-    tag    = var.pve_vm_vlan_tag
-    queues = var.pve_vm_packet_queue_count
   }
 }
 
