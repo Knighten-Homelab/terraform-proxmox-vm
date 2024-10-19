@@ -39,7 +39,7 @@ variable "pve_is_clone" {
 variable "pve_template" {
   type        = string
   description = "name of the PVE template to clone"
-  default     = "ubuntu-server-22-04-base-template-homela"
+  default     = "ubuntu-server-22-04-base-template-homelab"
 }
 
 variable "pve_vm_full_clone" {
