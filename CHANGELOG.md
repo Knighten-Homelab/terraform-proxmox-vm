@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.2.2...1.2.3) (2024-10-19)
+
+
+### Bug Fixes
+
+* added cloudinit storage config ([d2cba69](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/d2cba69d2ce409bdecc1332613cd71e82cf3b504))
+
 ## [1.2.2](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.2.1...1.2.2) (2024-10-19)
 
 
