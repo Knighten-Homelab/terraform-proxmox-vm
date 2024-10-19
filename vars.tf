@@ -146,6 +146,7 @@ variable "pve_ssh_user" {
 variable "pve_ssh_private_key" {
   type        = string
   description = "ssh private key to use for the VM"
+  default     = ""
 }
 
 variable "pve_vm_use_static_ip" {
