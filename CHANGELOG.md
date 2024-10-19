@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.2.0...1.2.1) (2024-10-19)
+
+
+### Bug Fixes
+
+* made ssh key have a blank default ([285acff](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/285acff40e7b449f172ca1e600442409af675e20))
+
 ## [1.2.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.1.0...1.2.0) (2024-10-18)
 
 
