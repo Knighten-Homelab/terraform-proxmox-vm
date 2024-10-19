@@ -62,6 +62,17 @@ resource "proxmox_vm_qemu" "pve_vm" {
       }
     }
 
+    dynamic "ide" {
+      for_each = var.pve_is_clone && var.pve_use_preprovisioner ? [1] : []
+      content {
+        ide0 {
+          cloudinit {
+            storage = var.pve_cloudinit_storage_location
+          }
+        }
+      }
+    }
+
     scsi {
       scsi0 {
         disk {

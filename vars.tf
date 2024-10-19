@@ -179,6 +179,12 @@ variable "pve_vm_dns_server" {
   default     = ""
 }
 
+variable "pve_cloudinit_storage_location" {
+  type        = string
+  description = "storage location for the cloud-init iso"
+  default     = "local-zfs"
+}
+
 # Disk Configuration
 
 variable "pve_vm_disk_size" {
