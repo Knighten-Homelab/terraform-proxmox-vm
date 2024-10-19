@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.2.1...1.2.2) (2024-10-19)
+
+
+### Bug Fixes
+
+* corrected default pve_template value ([143cd64](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/143cd64cdcd18924bfdfc36d051c842ce9d9778f))
+
 ## [1.2.1](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.2.0...1.2.1) (2024-10-19)
 
 
