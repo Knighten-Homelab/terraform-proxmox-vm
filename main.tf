@@ -39,6 +39,9 @@ resource "proxmox_vm_qemu" "pve_vm" {
   # Cloud-Init Options
   os_type                = var.pve_use_preprovisioner ? "cloud-init" : null
   define_connection_info = var.pve_use_preprovisioner
+  ciuser                 = var.pve_use_preprovisioner ? var.pve_ssh_user : null
+  cipassword             = null
+  ciupgrade              = true
   ssh_user               = var.pve_use_preprovisioner ? var.pve_ssh_user : null
   ssh_private_key        = var.pve_use_preprovisioner ? var.pve_ssh_private_key : null
   ipconfig0              = var.pve_use_preprovisioner ? (var.pve_vm_use_static_ip ? format("ip=%s,gw=%s", join("/", [var.pve_vm_ip, var.pve_vm_subnet_network_bits]), var.pve_vm_gateway) : "ip=dhcp") : null
@@ -78,6 +81,7 @@ resource "proxmox_vm_qemu" "pve_vm" {
         disk {
           size    = var.pve_vm_disk_size
           storage = var.pve_vm_disk_storage_location
+          format  = "raw"
         }
       }
     }
