@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.2.3...1.2.4) (2024-10-20)
+
+
+### Bug Fixes
+
+* added ci vars to fix issues with cloudinit ([a05144a](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/a05144a5c66ef2db69e328ed1465711fd6925102))
+
 ## [1.2.3](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.2.2...1.2.3) (2024-10-19)
 
 
