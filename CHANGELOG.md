@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.3.0...1.3.1) (2024-10-21)
+
+
+### Bug Fixes
+
+* made boot disk var default to null ([213d7cd](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/213d7cd5bb17577da1a779ad395acd8cba4bac99))
+
 ## [1.3.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.2.5...1.3.0) (2024-10-21)
 
 
