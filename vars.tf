@@ -65,7 +65,7 @@ variable "pve_vm_boot_on_start" {
 variable "pve_vm_startup_options" {
   type        = string
   description = "startup options seperated via comma: boot order (order=), startup delay(up=), and shutdown delay(down=)"
-  default     = "order=any"
+  default     = ""
 }
 
 variable "pve_vm_boot_disk" {
