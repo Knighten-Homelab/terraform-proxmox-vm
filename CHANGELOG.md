@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.2.4...1.2.5) (2024-10-21)
+
+
+### Bug Fixes
+
+* corrected startup option default value ([4873231](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/48732318a2b3a0227dc00190771a8b956e19dc5a))
+
 ## [1.2.4](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.2.3...1.2.4) (2024-10-20)
 
 
