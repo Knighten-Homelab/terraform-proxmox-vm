@@ -1,3 +1,10 @@
+## [1.3.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.2.5...1.3.0) (2024-10-21)
+
+
+### Features
+
+* added ip and dns outputs ([02ac0a8](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/02ac0a8d10ab9325ad833c9c7294e12c9e75a3e2))
+
 ## [1.2.5](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.2.4...1.2.5) (2024-10-21)
 
 
