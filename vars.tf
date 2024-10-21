@@ -71,8 +71,7 @@ variable "pve_vm_startup_options" {
 variable "pve_vm_boot_disk" {
   type        = string
   description = "boot disk for the VM"
-  default     = "scsi0"
-
+  default     = null
 }
 
 # CPU Options
