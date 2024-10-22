@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.3.2...1.3.3) (2024-10-22)
+
+
+### Bug Fixes
+
+* changed comparison for dynamic ide0 to compare against empty string ([2f06a8a](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/2f06a8a20c1a98942324f7893dff9f9407e38808))
+
 ## [1.3.2](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.3.1...1.3.2) (2024-10-22)
 
 
