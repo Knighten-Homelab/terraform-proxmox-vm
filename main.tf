@@ -57,7 +57,7 @@ resource "proxmox_vm_qemu" "pve_vm" {
   disks {
     ide {
       dynamic "ide0" {
-        for_each = var.pve_vm_iso ? [1] : []
+        for_each = var.pve_vm_iso != "" ? [1] : []
         content {
           cdrom {
             iso = var.pve_vm_iso
