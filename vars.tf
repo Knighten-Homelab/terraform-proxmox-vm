@@ -130,7 +130,7 @@ variable "pve_vm_networks" {
 
 # Cloud-Init Options
 
-variable "pve_use_preprovisioner" {
+variable "pve_use_cloud_init" {
   type        = bool
   description = "whether or not to use the preprovisioner"
   default     = true

@@ -37,15 +37,15 @@ resource "proxmox_vm_qemu" "pve_vm" {
   }
 
   # Cloud-Init Options
-  os_type                = var.pve_use_preprovisioner ? "cloud-init" : null
-  define_connection_info = var.pve_use_preprovisioner
-  ciuser                 = var.pve_use_preprovisioner ? var.pve_ssh_user : null
+  os_type                = var.pve_use_cloud_init ? "cloud-init" : null
+  define_connection_info = var.pve_use_cloud_init
+  ssh_user               = var.pve_use_cloud_init ? var.pve_ssh_user : null
+  ssh_private_key        = var.pve_use_cloud_init ? var.pve_ssh_private_key : null
+  ciuser                 = var.pve_use_cloud_init ? var.pve_ssh_user : null
   cipassword             = null
   ciupgrade              = true
-  ssh_user               = var.pve_use_preprovisioner ? var.pve_ssh_user : null
-  ssh_private_key        = var.pve_use_preprovisioner ? var.pve_ssh_private_key : null
-  ipconfig0              = var.pve_use_preprovisioner ? (var.pve_vm_use_static_ip ? format("ip=%s,gw=%s", join("/", [var.pve_vm_ip, var.pve_vm_subnet_network_bits]), var.pve_vm_gateway) : "ip=dhcp") : null
-  nameserver             = var.pve_use_preprovisioner ? var.pve_vm_dns_server : null
+  ipconfig0              = var.pve_use_cloud_init ? (var.pve_vm_use_static_ip ? format("ip=%s,gw=%s", join("/", [var.pve_vm_ip, var.pve_vm_subnet_network_bits]), var.pve_vm_gateway) : "ip=dhcp") : null
+  nameserver             = var.pve_use_cloud_init ? var.pve_vm_dns_server : null
 
   # Agent Options
   agent = var.pve_vm_agent
@@ -53,22 +53,20 @@ resource "proxmox_vm_qemu" "pve_vm" {
   # Disk Options
 
   scsihw = var.pve_vm_scsihw
+
   disks {
-    dynamic "ide" {
-      for_each = !var.pve_is_clone ? [1] : []
-      content {
-        ide0 {
+    ide {
+      dynamic "ide0" {
+        for_each = var.pve_vm_iso ? [1] : []
+        content {
           cdrom {
             iso = var.pve_vm_iso
           }
         }
       }
-    }
-
-    dynamic "ide" {
-      for_each = var.pve_is_clone && var.pve_use_preprovisioner ? [1] : []
-      content {
-        ide0 {
+      dynamic "ide1" {
+        for_each = var.pve_use_cloud_init ? [1] : []
+        content {
           cloudinit {
             storage = var.pve_cloudinit_storage_location
           }
