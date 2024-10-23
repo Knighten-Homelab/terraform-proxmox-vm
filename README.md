@@ -1,99 +1,258 @@
-# ProxMox VM Single Node (PowerDNS Record + AWX Registration)
+# Homelab Proxmox VM Terraform Module
 
-This Terraform module will create a single VM on a ProxMox cluster. It will also create a DNS A record on a local PowerDNS server and also register the host on AWX.
+Terraform module which creates a ProxMox VM, registers it to AWX, and creates a PowerDNS A record.
 
-The module assumes that you have a service account called `ansible` baked into your PVE template which has an assigned SSH key. The `ansible` service account is used by PVE to finalize VM setup and by AWX to connect to the host and run playbooks. In the future this may change to be less opinionated.
+This module is designed to be used with the technology stack I utilize in my homelab. It assumes you are using the following technologies:
 
-Typically I create a PVE template using Packer that setups the `ansible` service account and also installs the SSH key.
+- [Proxmox](https://www.proxmox.com/en/)
+  - Hypervisor
+- [AWX](https://github.com/ansible/awx)
+  - Ansible Automation Platform
+  - Upstream project for Ansible Tower
+- [PowerDNS](https://www.powerdns.com/)
+  - DNS Server
 
-## Required Providers
+The main goal of this module was to streamline my VM creation process by: providing sane default values, automating integration with my primary automation platform, and aiding service discovery via DNS. This module is not designed to be used by others as it is highly opinionated and tailored to my specific use case; however, it may be useful as a reference for others.
+
+## Opinionated Decisions
+
+Here are some of the opinionated decisions made in this module (this is not an exhaustive list):
+
+- Technology Stack: Proxmox, AWX, and PowerDNS
+- VM Configuration:
+  - Limited Number of CPU Options
+  - Cloud-Init Use
+    - Only Cloud-Init for VM Provisioning
+    - Only Allows One ipconfig to be configured
+    - Always Upgrades on First Boot
+    - Only Uses SSH For Provisioning (No Passwords)
+    - Provisioner User Name Matches SSH Name
+  - Disks
+    - Only One Storage Disk That is Virtio-SCSI Mapped to scsi0
+    - ide0 is the CD-ROM Used When Using an ISO
+    - ide1 is the Cloud-Init Disk
+- DNS
+  - Only Creates Single A Record
+  - TTL = 60 and Not Configurable
+- AWX
+  - All Organizations, Inventories, and Inventory Groups Must Already Exist
+  - Only adds ansible_host and hostname To Host Variables
+
+## Requirements
+
+### Terraform
+
+This module requires Terraform 1.9.8 or later. It may be compatible with earlier versions but only has been tested with 1.9.8.
+
+### Providers
 
 The table below lists the providers required by this module.
 
-| Name | Source| Version |
-|------|-----|----|
-| proxmox | telmate/proxmox | = 2.9.14 |
-| powerdns | pan-net/powerdns |= 1.5.0 |
-| awx | denouche/awx |= 0.19.0 |
+| Name     | Source           | Version     |
+| -------- | ---------------- | ----------- |
+| proxmox  | telmate/proxmox  | = 3.0.1-rc4 |
+| powerdns | pan-net/powerdns | = 1.5.0     |
+| awx      | denouche/awx     | = 0.19.0    |
 
-*See the provider block in [main.tf](main.tf) for more up to date details.*
+You most configure the above providers (URLs, credentials, ...) in your terraform configuration.
+
+_See the [versions.tf](versions.tf) for more up to date details._
 
 ## Variables
-### Auth Variables
 
-These variables are all required and are used to authenticate to the various services.
+### PVE Variables
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| pve_username | username for the ProxMox API | `string` | n/a | yes |
-| pve_password | password for the ProxMox API | `string` | n/a | yes |
-| ansible_service_account_ssh_key | SSH key for the ansible service account | `string` | n/a | yes |
-| awx_account_username | username used to interact with the AWX API | `string` | n/a | yes |
-| awx_account_password | password used to interact with the AWX API | `string` | n/a | yes |
-| pdns_api_key | API key for the PowerDNS API | `string` | n/a | yes |
+#### Proxmox and Metadata Variables
 
-### All Other Variables
+| Name          | Description                                  | Type     | Default | Required |
+| ------------- | -------------------------------------------- | -------- | ------- | :------: |
+| `pve_node`    | name of the ProxMox node to create the VM on | `string` | n/a     |   yes    |
+| `pve_vm_name` | name of the VM to create                     | `string` | n/a     |   yes    |
+| `pve_vm_id`   | id of the VM                                 | `number` | `0`     |    no    |
+| `pve_vm_desc` | description of the VM                        | `string` | `""`    |    no    |
 
-#### PVE Variables
+#### Cloning and Template Variables
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| pve_cluster_url | URL for the ProxMox cluster | `string` | n/a | yes |
-| pve_node | name of the ProxMox node to create the VM on | `string` | n/a | yes |
-| pve_vm_name | name of the VM to create | `string` | n/a | yes |
-| pve_template | name of the PVE template to clone | `string` | n/a | yes |
-| pve_vm_desc | description of the VM | `string` | `""` | no |
-| pve_vm_full_clone | whether or not to do a full clone | `string` | `"true"` | no |
-| pve_vm_boot_on_start | whether or not to boot the VM on start | `bool` | `false` | no |
-| pve_vm_startup_options | startup options separated via comma - boot order (order=), startup delay(up=), and shutdown delay(down=)| `string` | `"order=any"` | no |
-| pve_vm_use_static_ip | whether or not to use a static IP or DHCP | `bool` | `false` | no |
-| pve_vm_ip | IP address to use for the VM, must be set if using static IP | `string` | `""` | no |
-| pve_vm_subnet_network_bits | number of subnet network bits to use for the VM, must be set if using static IP | `string` | `""` | no |
-| pve_vm_gateway | gateway to use for the VM, must be set if using static IP | `string` | `""` | no |
-| pve_vm_dns_servers | DNS servers to use for the VM, space separated, must be set if using static IP | `string` | `""` | no |
-| pve_vm_vlan_tag | VLAN tag to use for the VM | `string` | `"-1"` | no |
-| pve_vm_packet_queue_count | number of VM packet queues | `string` | `"1"` | no |
-| pve_vm_core_count | number of cores to allocate to the VM | `string` | `"2"` | no |
-| pve_vm_memory | amount of memory to allocate to the VM in MB | `string` | `"2048"` | no |
-| pve_vm_disk_size | size of the VM disk | `string` | `"20G"` | no |
-| pve_vm_disk_storage_location | storage location for the VM disk | `string` | `"local-zfs"` | no |
+| Name                | Description                                                   | Type     | Default                                     | Required |
+| ------------------- | ------------------------------------------------------------- | -------- | ------------------------------------------- | :------: |
+| `pve_is_clone`      | Flag to determine if the VM is a clone or not (based off iso) | `bool`   | `true`                                      |    no    |
+| `pve_template`      | name of the PVE template to clone                             | `string` | `ubuntu-server-22-04-base-template-homelab` |    no    |
+| `pve_vm_full_clone` | whether or not to do a full clone of the template             | `bool`   | `true`                                      |    no    |
+| `pve_vm_iso`        | iso to use for the VM                                         | `string` | `""`                                        |    no    |
 
-#### AWX Variables
+#### Boot Options
+
+| Name                     | Description                                                                                             | Type     | Default | Required |
+| ------------------------ | ------------------------------------------------------------------------------------------------------- | -------- | ------- | :------: |
+| `pve_vm_boot_on_start`   | whether or not to boot the VM on start                                                                  | `bool`   | `false` |    no    |
+| `pve_vm_startup_options` | startup options separated via comma: boot order (order=), startup delay(up=), and shutdown delay(down=) | `string` | `""`    |    no    |
+| `pve_vm_boot_disk`       | boot disk for the VM                                                                                    | `string` | `null`  |    no    |
+
+#### CPU Options
+
+| Name                | Description                             | Type     | Default | Required |
+| ------------------- | --------------------------------------- | -------- | ------- | :------: |
+| `pve_vm_core_count` | number of cores to allocate to the VM   | `string` | `2`     |    no    |
+| `pve_vm_cpu_type`   | type of CPU to use for the VM           | `string` | `host`  |    no    |
+| `pve_vm_sockets`    | number of sockets to allocate to the VM | `string` | `1`     |    no    |
+
+#### Memory Options
+
+| `pve_vm_memory_size` | amount of memory to allocate to the VM in MB | `number` | `2048` | no |
+| `pve_memory_balloon` | whether or not to use memory ballooning | `number` | `0` | no |
+
+#### Network Options
+
+| Name              | Description                               | Type           | Default   | Required |
+| ----------------- | ----------------------------------------- | -------------- | --------- | :------: |
+| `pve_vm_networks` | List of network configurations for the VM | `list(object)` | see below |    no    |
+
+For the pve_vm_networks variable, the default value is a list of objects, which is not easily representable in a single cell. Here is the default value for pve_vm_networks:
+
+```hcl
+default = [
+  {
+    model  = "virtio"
+    bridge = "vmbr0"
+    tag    = "-1"
+    queues = "1"
+  }
+]
+```
+
+#### Cloud-Init Options
+
+| Name                             | Description                                                                     | Type     | Default     | Required |
+| -------------------------------- | ------------------------------------------------------------------------------- | -------- | ----------- | :------: |
+| `pve_use_cloud_init`             | whether or not to use the cloud_init                                            | `bool`   | `true`      |    no    |
+| `pve_ssh_user`                   | ssh user used to provision the VM                                               | `string` | `ansible`   |    no    |
+| `pve_ssh_private_key`            | ssh private key used to provision the VM                                        | `string` | `""`        |    no    |
+| `pve_vm_use_static_ip`           | whether or not to use a static IP or DHCP                                       | `bool`   | `false`     |    no    |
+| `pve_vm_ip`                      | IP address to use for the VM, must be set if using static IP                    | `string` | `""`        |    no    |
+| `pve_vm_subnet_network_bits`     | number of subnet network bits to use for the VM, must be set if using static IP | `string` | `""`        |    no    |
+| `pve_vm_gateway`                 | gateway to use for the VM, must be set if using static IP                       | `string` | `""`        |    no    |
+| `pve_vm_dns_server`              | ip of vm's dns server                                                           | `string` | `""`        |    no    |
+| `pve_cloudinit_storage_location` | storage location for the cloud-init iso                                         | `string` | `local-zfs` |    no    |
+| `pve_vm_disk_size`               | size of the VM disk                                                             | `string` | `20G`       |    no    |
+
+#### Disk Options
+
+| Name                           | Description                      | Type     | Default           | Required |
+| ------------------------------ | -------------------------------- | -------- | ----------------- | :------: |
+| `pve_vm_disk_size`             | size of the VM disk              | `string` | `20G`             |    no    |
+| `pve_vm_disk_storage_location` | storage location for the VM disk | `string` | `local-zfs`       |    no    |
+| `pve_vm_scsihw`                | scsi hardware to use for the VM  | `string` | `virtio-scsi-pci` |    no    |
+
+### AWX Variables
 
 You do not need to supply the numeric IDs for the organization, inventory, and inventory groups, the module will look them up based on the name.
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| awx_url | URL for the AWX API | `string` | n/a | yes |
-| awx_organization | name of the AWX organization to create the host in | `string` | n/a | yes |
-| awx_inventory | name of the AWX inventory to create the host in | `string` | n/a | yes |
-| awx_host_groups | comma separated list of AWX host groups to add the host to | `list(string)` | `""` | no |
-| awx_host_name | name of the AWX host to create | `string` | n/a | yes |
-| awx_host_description | description of the AWX host to create | `string` | `""` | no |
+| Name                   | Description                                                | Type           | Default | Required |
+| ---------------------- | ---------------------------------------------------------- | -------------- | ------- | :------: |
+| `awx_organization`     | name of the AWX organization to create the host in         | `string`       | n/a     |   yes    |
+| `awx_inventory`        | name of the AWX inventory to create the host in            | `string`       | n/a     |   yes    |
+| `awx_host_groups`      | comma separated list of AWX host groups to add the host to | `list(string)` | n/a     |   yes    |
+| `awx_host_name`        | name of the AWX host to create                             | `string`       | n/a     |   yes    |
+| `awx_host_description` | description of the AWX host to create                      | `string`       | n/a     |   yes    |
 
-
-#### PowerDNS Variables
+### PowerDNS Variables
 
 Currently only a single A record will be created.
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| pdns_url | URL for the PowerDNS API | `string` | n/a | yes |
-| pdns_zone | name of the PowerDNS zone to create the record in | `string` | n/a | yes |
-| pdns_record_name | name of the PowerDNS record to create | `string` | n/a | yes |
+| Name               | Description                                       | Type     | Default | Required |
+| ------------------ | ------------------------------------------------- | -------- | ------- | :------: |
+| `pdns_zone`        | name of the PowerDNS zone to create the record in | `string` | n/a     |   yes    |
+| `pdns_record_name` | name of the PowerDNS record to create             | `string` | n/a     |   yes    |
 
-## Possible Enhancements
+## Outputs
 
-* PVE
-    * Add support to use a different service account other than `ansible` 
-    * Allow multiple ipconfig# options to be passed in
-    * Allow multiple DNS records to be created
-    * Allow network model to be passed in
-    * Allow multiple disks to be created
-    * Allow CPU type to be passed in
-* AWX
-    * Use a different authentication method for AWX other than username/password
-    * Change hardcoded variables section to something more dynamic
-* PowerDNS
-    * Allow multiple records to be created
-    * Allow different record types to be created
+| Name         | Description                                | Type           | Sensitive |
+| ------------ | ------------------------------------------ | -------------- | --------- |
+| `ip-address` | The default IPv4 address of the Proxmox VM | `string`       | no        |
+| `dns-record` | The DNS record created in PowerDNS         | `list(string)` | no        |
+
+## Usage
+
+### Using An ISO
+
+```hcl
+module "test-vm" {
+  source = "github.com/Johnny-Knighten/terraform-homelab-pve-vm"
+
+  pve_node    = "node-alpha"
+  pve_vm_name = "test-vm"
+  pve_vm_id   = 400
+
+  pve_is_clone = false
+  pve_vm_iso   = "local:iso/ubuntu-server-22-04.iso"
+
+  pve_vm_networks = [
+    {
+      model  = "virtio"
+      bridge = "vmbr0"
+      tag    = 6
+      queues = 0
+    }
+  ]
+
+  pve_vm_memory_size = 8196
+  pve_memory_balloon = 8196
+
+  pve_vm_disk_size = 40
+
+  pdns_zone        = "homelab.lan"
+  pdns_record_name = "test-vm"
+
+  awx_organization     = "Homelab"
+  awx_inventory        = "Homelab Endpoints"
+  awx_host_groups      = ["proxmox-hosts"]
+  awx_host_name        = "test-vm"
+  awx_host_description = "A test VM created by Terraform"
+}
+```
+
+### Using A Template
+
+```hcl
+module "cloned-vm" {
+  source = "github.com/Johnny-Knighten/terraform-homelab-pve-vm"
+
+  pve_node    = "node-alpha"
+  pve_vm_name = "cloned-vm"
+  pve_vm_id   = 401
+
+  pve_is_clone      = true
+  pve_vm_full_clone = true
+  pve_template      = "ubuntu-server-22-04-base-template-homelab"
+
+  pve_use_cloud_init         = true
+  pve_vm_use_static_ip       = true
+  pve_vm_ip                  = "192.168.25.100"
+  pve_vm_subnet_network_bits = 24
+  pve_vm_gateway             = "192.168.25.1"
+  pve_vm_dns_server          = "192.168.25.2 192.168.25.3 192.168.25.1"
+
+  pve_vm_networks = [
+    {
+      model  = "virtio"
+      bridge = "vmbr0"
+      tag    = 6
+      queues = 0
+    }
+  ]
+
+  pve_vm_memory_size = 8196
+  pve_memory_balloon = 8196
+
+  pve_vm_disk_size = 40
+
+  pdns_zone        = "homelab.lan"
+  pdns_record_name = "cloned-vm"
+
+  awx_organization     = "Homelab"
+  awx_inventory        = "Homelab Endpoints"
+  awx_host_groups      = ["proxmox-hosts"]
+  awx_host_name        = "cloned-vm"
+  awx_host_description = "A cloned VM created by Terraform"
+}
+```

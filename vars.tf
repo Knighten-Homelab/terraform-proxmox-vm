@@ -132,19 +132,19 @@ variable "pve_vm_networks" {
 
 variable "pve_use_cloud_init" {
   type        = bool
-  description = "whether or not to use the preprovisioner"
+  description = "whether or not to use the cloud_init"
   default     = true
 }
 
 variable "pve_ssh_user" {
   type        = string
-  description = "ssh user to use for the VM"
+  description = "ssh user to used to provision the VM"
   default     = "ansible"
 }
 
 variable "pve_ssh_private_key" {
   type        = string
-  description = "ssh private key to use for the VM"
+  description = "ssh private key to used to provision the VM"
   default     = ""
 }
 
