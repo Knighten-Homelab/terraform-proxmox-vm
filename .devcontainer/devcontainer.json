@@ -44,6 +44,6 @@
 
   // For WSL
   "mounts": [
-    "type=bind,source=${localEnv:HOME}/.ssh,target=/root/.ssh,readonly"
+    "type=bind,source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,readonly"
   ]
 }
