@@ -1,3 +1,11 @@
+## [1.3.4](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.3.3...1.3.4) (2024-10-23)
+
+
+### Bug Fixes
+
+* correct dir ssh keys are mounted to ([b5ed1cc](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/b5ed1cc8f683e2b4d91b6dd331c7daa2f67e479b))
+* made devcontainer run as non-root and removed extra mount ([60472a1](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/60472a1df8db9d79a3dcdcb42bc9183b8824d018))
+
 ## [1.3.3](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.3.2...1.3.3) (2024-10-22)
 
 
