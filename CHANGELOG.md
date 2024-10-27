@@ -25,7 +25,7 @@
 
 ### Bug Fixes
 
-* made cloudinit drive creation be based on pve_use_cloud_init var ([b9c4ae7](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/b9c4ae72f12a613f2e9c3692d9ef887026b07177))
+* made cloudinit drive creation be based on pve_use_ci var ([b9c4ae7](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/b9c4ae72f12a613f2e9c3692d9ef887026b07177))
 
 ## [1.3.1](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.3.0...1.3.1) (2024-10-21)
 

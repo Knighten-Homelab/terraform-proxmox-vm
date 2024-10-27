@@ -9,20 +9,20 @@ variable "pve_node" {
   description = "name of the ProxMox node to create the VM on"
 }
 
-variable "pve_vm_name" {
+variable "pve_name" {
   type        = string
   description = "name of the VM to create"
 }
 
 # Metadata Variables
 
-variable "pve_vm_id" {
+variable "pve_id" {
   type        = number
   description = "id of the VM"
   default     = 0
 }
 
-variable "pve_vm_desc" {
+variable "pve_desc" {
   type        = string
   description = "description of the VM"
   default     = ""
@@ -42,13 +42,13 @@ variable "pve_template" {
   default     = "ubuntu-server-22-04-base-template-homelab"
 }
 
-variable "pve_vm_full_clone" {
+variable "pve_full_clone" {
   type        = bool
   description = "whether or not to do a full clone of the template"
   default     = true
 }
 
-variable "pve_vm_iso" {
+variable "pve_iso" {
   type        = string
   description = "iso to use for the VM"
   default     = ""
@@ -56,19 +56,19 @@ variable "pve_vm_iso" {
 
 # Boot Options
 
-variable "pve_vm_boot_on_start" {
+variable "pve_boot_on_start" {
   type        = bool
   description = "whether or not to boot the VM on start"
   default     = false
 }
 
-variable "pve_vm_startup_options" {
+variable "pve_startup_options" {
   type        = string
   description = "startup options seperated via comma: boot order (order=), startup delay(up=), and shutdown delay(down=)"
   default     = ""
 }
 
-variable "pve_vm_boot_disk" {
+variable "pve_boot_disk" {
   type        = string
   description = "boot disk for the VM"
   default     = null
@@ -76,19 +76,19 @@ variable "pve_vm_boot_disk" {
 
 # CPU Options
 
-variable "pve_vm_core_count" {
+variable "pve_core_count" {
   type        = string
   description = "number of cores to allocate to the VM"
   default     = "2"
 }
 
-variable "pve_vm_cpu_type" {
+variable "pve_cpu_type" {
   type        = string
   description = "type of CPU to use for the VM"
   default     = "host"
 }
 
-variable "pve_vm_sockets" {
+variable "pve_sockets" {
   type        = string
   description = "number of sockets to allocate to the VM"
   default     = "1"
@@ -96,10 +96,10 @@ variable "pve_vm_sockets" {
 
 # Memory Options
 
-variable "pve_vm_memory_size" {
+variable "pve_memory_size" {
   type        = number
-  description = "amount of memory to allocate to the VM in MB"
-  default     = 2048
+  description = "amount of memory to allocate to the VM in MiB"
+  default     = 3815
 }
 
 variable "pve_memory_balloon" {
@@ -110,7 +110,7 @@ variable "pve_memory_balloon" {
 
 # Network Options
 
-variable "pve_vm_networks" {
+variable "pve_networks" {
   type = list(object({
     model  = string
     bridge = string
@@ -130,55 +130,55 @@ variable "pve_vm_networks" {
 
 # Cloud-Init Options
 
-variable "pve_use_cloud_init" {
+variable "pve_use_ci" {
   type        = bool
   description = "whether or not to use the cloud_init"
   default     = true
 }
 
-variable "pve_ssh_user" {
+variable "pve_ci_ssh_user" {
   type        = string
   description = "ssh user to used to provision the VM"
   default     = "ansible"
 }
 
-variable "pve_ssh_private_key" {
+variable "pve_ci_ssh_private_key" {
   type        = string
   description = "ssh private key to used to provision the VM"
   default     = ""
 }
 
-variable "pve_vm_use_static_ip" {
+variable "pve_ci_use_dhcp" {
   type        = bool
   description = "whether or not to use a static IP or DHCP"
-  default     = false
+  default     = true
 }
 
-variable "pve_vm_ip" {
+variable "pve_ci_ip_address" {
   type        = string
   description = "IP address to use for the VM, must be set if using static IP"
   default     = ""
 }
 
-variable "pve_vm_subnet_network_bits" {
+variable "pve_ci_subnet_network_bits" {
   type        = string
   description = "number of subnet network bits to use for the VM, must be set if using static IP"
   default     = ""
 }
 
-variable "pve_vm_gateway" {
+variable "pve_ci_gateway_address" {
   type        = string
   description = "gateway to use for the VM, must be set if using static IP"
   default     = ""
 }
 
-variable "pve_vm_dns_server" {
+variable "pve_ci_dns_servers" {
   type        = string
-  description = "ip of vm's dns server"
+  description = "ip of vm's dns server (space seperated)"
   default     = ""
 }
 
-variable "pve_cloudinit_storage_location" {
+variable "pve_ci_storage_location" {
   type        = string
   description = "storage location for the cloud-init iso"
   default     = "local-zfs"
@@ -186,19 +186,19 @@ variable "pve_cloudinit_storage_location" {
 
 # Disk Configuration
 
-variable "pve_vm_disk_size" {
+variable "pve_disk_size" {
   type        = string
-  description = "size of the VM disk "
+  description = "size of the VM disk (integer followed by M, G, T,...)"
   default     = "40G"
 }
 
-variable "pve_vm_disk_storage_location" {
+variable "pve_disk_storage_location" {
   type        = string
   description = "storage location for the VM disk"
   default     = "local-zfs"
 }
 
-variable "pve_vm_scsihw" {
+variable "pve_scsihw" {
   type        = string
   description = "scsi hardware to use for the VM"
   default     = "virtio-scsi-pci"
@@ -206,7 +206,7 @@ variable "pve_vm_scsihw" {
 
 # Agent Options
 
-variable "pve_vm_agent" {
+variable "pve_use_agent" {
   type        = number
   description = "whether or not to use the agent"
   default     = 1

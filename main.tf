@@ -1,33 +1,33 @@
 resource "proxmox_vm_qemu" "pve_vm" {
   # Minimum Required Fields
-  name        = var.pve_vm_name
+  name        = var.pve_name
   target_node = var.pve_node
 
   # Metadata Fields
-  vmid = var.pve_vm_id
-  desc = var.pve_vm_desc
+  vmid = var.pve_id
+  desc = var.pve_desc
 
   # Template/Clone Fields
-  full_clone = var.pve_is_clone ? var.pve_vm_full_clone : null
+  full_clone = var.pve_is_clone ? var.pve_full_clone : null
   clone      = var.pve_is_clone ? var.pve_template : null
 
   # Boot Options
-  onboot   = var.pve_vm_boot_on_start
-  startup  = var.pve_vm_startup_options
-  bootdisk = var.pve_vm_boot_disk
+  onboot   = var.pve_boot_on_start
+  startup  = var.pve_startup_options
+  bootdisk = var.pve_boot_disk
 
   # CPU Options
-  cores   = var.pve_vm_core_count
-  sockets = var.pve_vm_sockets
-  cpu     = var.pve_vm_cpu_type
+  cores   = var.pve_core_count
+  sockets = var.pve_sockets
+  cpu     = var.pve_cpu_type
 
   # Memory Options
-  memory  = var.pve_vm_memory_size
+  memory  = var.pve_memory_size
   balloon = var.pve_memory_balloon
 
   # Network Options
   dynamic "network" {
-    for_each = var.pve_vm_networks
+    for_each = var.pve_networks
     content {
       model  = network.value.model
       bridge = network.value.bridge
@@ -37,38 +37,38 @@ resource "proxmox_vm_qemu" "pve_vm" {
   }
 
   # Cloud-Init Options
-  os_type                = var.pve_use_cloud_init ? "cloud-init" : null
-  define_connection_info = var.pve_use_cloud_init
-  ssh_user               = var.pve_use_cloud_init ? var.pve_ssh_user : null
-  ssh_private_key        = var.pve_use_cloud_init ? var.pve_ssh_private_key : null
-  ciuser                 = var.pve_use_cloud_init ? var.pve_ssh_user : null
+  os_type                = var.pve_use_ci ? "cloud-init" : null
+  define_connection_info = var.pve_use_ci
+  ssh_user               = var.pve_use_ci ? var.pve_ci_ssh_user : null
+  ssh_private_key        = var.pve_use_ci ? var.pve_ci_ssh_private_key : null
+  ciuser                 = var.pve_use_ci ? var.pve_ci_ssh_user : null
   cipassword             = null
   ciupgrade              = true
-  ipconfig0              = var.pve_use_cloud_init ? (var.pve_vm_use_static_ip ? format("ip=%s,gw=%s", join("/", [var.pve_vm_ip, var.pve_vm_subnet_network_bits]), var.pve_vm_gateway) : "ip=dhcp") : null
-  nameserver             = var.pve_use_cloud_init ? var.pve_vm_dns_server : null
+  ipconfig0              = var.pve_use_ci ? (var.pve_ci_use_dhcp ? "ip=dhcp" : format("ip=%s,gw=%s", join("/", [var.pve_ci_ip_address, var.pve_ci_subnet_network_bits]), var.pve_ci_gateway_address)) : null
+  nameserver             = var.pve_use_ci ? var.pve_ci_dns_servers : null
 
   # Agent Options
-  agent = var.pve_vm_agent
+  agent = var.pve_use_agent
 
   # Disk Options
 
-  scsihw = var.pve_vm_scsihw
+  scsihw = var.pve_scsihw
 
   disks {
     ide {
       dynamic "ide0" {
-        for_each = var.pve_vm_iso != "" ? [1] : []
+        for_each = var.pve_iso != "" ? [1] : []
         content {
           cdrom {
-            iso = var.pve_vm_iso
+            iso = var.pve_iso
           }
         }
       }
       dynamic "ide1" {
-        for_each = var.pve_use_cloud_init ? [1] : []
+        for_each = var.pve_use_ci ? [1] : []
         content {
           cloudinit {
-            storage = var.pve_cloudinit_storage_location
+            storage = var.pve_ci_storage_location
           }
         }
       }
@@ -77,8 +77,8 @@ resource "proxmox_vm_qemu" "pve_vm" {
     scsi {
       scsi0 {
         disk {
-          size    = var.pve_vm_disk_size
-          storage = var.pve_vm_disk_storage_location
+          size    = var.pve_disk_size
+          storage = var.pve_disk_storage_location
           format  = "raw"
         }
       }

@@ -64,50 +64,50 @@ _See the [versions.tf](versions.tf) for more up to date details._
 
 #### Proxmox and Metadata Variables
 
-| Name          | Description                                  | Type     | Default | Required |
-| ------------- | -------------------------------------------- | -------- | ------- | :------: |
-| `pve_node`    | name of the ProxMox node to create the VM on | `string` | n/a     |   yes    |
-| `pve_vm_name` | name of the VM to create                     | `string` | n/a     |   yes    |
-| `pve_vm_id`   | id of the VM                                 | `number` | `0`     |    no    |
-| `pve_vm_desc` | description of the VM                        | `string` | `""`    |    no    |
+| Name       | Description                                  | Type     | Default | Required |
+| ---------- | -------------------------------------------- | -------- | ------- | :------: |
+| `pve_node` | name of the ProxMox node to create the VM on | `string` | n/a     |   yes    |
+| `pve_name` | name of the VM to create                     | `string` | n/a     |   yes    |
+| `pve_id`   | id of the VM                                 | `number` | `0`     |    no    |
+| `pve_desc` | description of the VM                        | `string` | `""`    |    no    |
 
 #### Cloning and Template Variables
 
-| Name                | Description                                                   | Type     | Default                                     | Required |
-| ------------------- | ------------------------------------------------------------- | -------- | ------------------------------------------- | :------: |
-| `pve_is_clone`      | Flag to determine if the VM is a clone or not (based off iso) | `bool`   | `true`                                      |    no    |
-| `pve_template`      | name of the PVE template to clone                             | `string` | `ubuntu-server-22-04-base-template-homelab` |    no    |
-| `pve_vm_full_clone` | whether or not to do a full clone of the template             | `bool`   | `true`                                      |    no    |
-| `pve_vm_iso`        | iso to use for the VM                                         | `string` | `""`                                        |    no    |
+| Name             | Description                                                   | Type     | Default                                     | Required |
+| ---------------- | ------------------------------------------------------------- | -------- | ------------------------------------------- | :------: |
+| `pve_is_clone`   | Flag to determine if the VM is a clone or not (based off iso) | `bool`   | `true`                                      |    no    |
+| `pve_template`   | name of the PVE template to clone                             | `string` | `ubuntu-server-22-04-base-template-homelab` |    no    |
+| `pve_full_clone` | whether or not to do a full clone of the template             | `bool`   | `true`                                      |    no    |
+| `pve_iso`        | iso to use for the VM                                         | `string` | `""`                                        |    no    |
 
 #### Boot Options
 
-| Name                     | Description                                                                                             | Type     | Default | Required |
-| ------------------------ | ------------------------------------------------------------------------------------------------------- | -------- | ------- | :------: |
-| `pve_vm_boot_on_start`   | whether or not to boot the VM on start                                                                  | `bool`   | `false` |    no    |
-| `pve_vm_startup_options` | startup options separated via comma: boot order (order=), startup delay(up=), and shutdown delay(down=) | `string` | `""`    |    no    |
-| `pve_vm_boot_disk`       | boot disk for the VM                                                                                    | `string` | `null`  |    no    |
+| Name                  | Description                                                                                             | Type     | Default | Required |
+| --------------------- | ------------------------------------------------------------------------------------------------------- | -------- | ------- | :------: |
+| `pve_boot_on_start`   | whether or not to boot the VM on start                                                                  | `bool`   | `false` |    no    |
+| `pve_startup_options` | startup options separated via comma: boot order (order=), startup delay(up=), and shutdown delay(down=) | `string` | `""`    |    no    |
+| `pve_boot_disk`       | boot disk for the VM                                                                                    | `string` | `null`  |    no    |
 
 #### CPU Options
 
-| Name                | Description                             | Type     | Default | Required |
-| ------------------- | --------------------------------------- | -------- | ------- | :------: |
-| `pve_vm_core_count` | number of cores to allocate to the VM   | `string` | `2`     |    no    |
-| `pve_vm_cpu_type`   | type of CPU to use for the VM           | `string` | `host`  |    no    |
-| `pve_vm_sockets`    | number of sockets to allocate to the VM | `string` | `1`     |    no    |
+| Name             | Description                             | Type     | Default | Required |
+| ---------------- | --------------------------------------- | -------- | ------- | :------: |
+| `pve_core_count` | number of cores to allocate to the VM   | `string` | `2`     |    no    |
+| `pve_cpu_type`   | type of CPU to use for the VM           | `string` | `host`  |    no    |
+| `pve_sockets`    | number of sockets to allocate to the VM | `string` | `1`     |    no    |
 
 #### Memory Options
 
-| `pve_vm_memory_size` | amount of memory to allocate to the VM in MB | `number` | `2048` | no |
+| `pve_memory_size` | amount of memory to allocate to the VM in MB | `number` | `2048` | no |
 | `pve_memory_balloon` | whether or not to use memory ballooning | `number` | `0` | no |
 
 #### Network Options
 
-| Name              | Description                               | Type           | Default   | Required |
-| ----------------- | ----------------------------------------- | -------------- | --------- | :------: |
-| `pve_vm_networks` | List of network configurations for the VM | `list(object)` | see below |    no    |
+| Name           | Description                               | Type           | Default   | Required |
+| -------------- | ----------------------------------------- | -------------- | --------- | :------: |
+| `pve_networks` | List of network configurations for the VM | `list(object)` | see below |    no    |
 
-For the pve_vm_networks variable, the default value is a list of objects, which is not easily representable in a single cell. Here is the default value for pve_vm_networks:
+For the pve_networks variable, the default value is a list of objects, which is not easily representable in a single cell. Here is the default value for pve_networks:
 
 ```hcl
 default = [
@@ -122,26 +122,25 @@ default = [
 
 #### Cloud-Init Options
 
-| Name                             | Description                                                                     | Type     | Default     | Required |
-| -------------------------------- | ------------------------------------------------------------------------------- | -------- | ----------- | :------: |
-| `pve_use_cloud_init`             | whether or not to use the cloud_init                                            | `bool`   | `true`      |    no    |
-| `pve_ssh_user`                   | ssh user used to provision the VM                                               | `string` | `ansible`   |    no    |
-| `pve_ssh_private_key`            | ssh private key used to provision the VM                                        | `string` | `""`        |    no    |
-| `pve_vm_use_static_ip`           | whether or not to use a static IP or DHCP                                       | `bool`   | `false`     |    no    |
-| `pve_vm_ip`                      | IP address to use for the VM, must be set if using static IP                    | `string` | `""`        |    no    |
-| `pve_vm_subnet_network_bits`     | number of subnet network bits to use for the VM, must be set if using static IP | `string` | `""`        |    no    |
-| `pve_vm_gateway`                 | gateway to use for the VM, must be set if using static IP                       | `string` | `""`        |    no    |
-| `pve_vm_dns_server`              | ip of vm's dns server                                                           | `string` | `""`        |    no    |
-| `pve_cloudinit_storage_location` | storage location for the cloud-init iso                                         | `string` | `local-zfs` |    no    |
-| `pve_vm_disk_size`               | size of the VM disk                                                             | `string` | `20G`       |    no    |
+| Name                         | Description                                                                     | Type     | Default     | Required |
+| ---------------------------- | ------------------------------------------------------------------------------- | -------- | ----------- | :------: |
+| `pve_use_ci`                 | whether or not to use the cloud_init                                            | `bool`   | `true`      |    no    |
+| `pve_ci_ssh_user`            | ssh user used to provision the VM                                               | `string` | `ansible`   |    no    |
+| `pve_ci_ssh_private_key`     | ssh private key used to provision the VM                                        | `string` | `""`        |    no    |
+| `pve_ci_use_dhcp`            | whether or not to use a static IP or DHCP                                       | `bool`   | `false`     |    no    |
+| `pve_ci_ip_address`          | IP address to use for the VM, must be set if using static IP                    | `string` | `""`        |    no    |
+| `pve_ci_subnet_network_bits` | number of subnet network bits to use for the VM, must be set if using static IP | `string` | `""`        |    no    |
+| `pve_ci_gateway_address`     | gateway to use for the VM, must be set if using static IP                       | `string` | `""`        |    no    |
+| `pve_ci_dns_servers`         | ip of vm's dns server                                                           | `string` | `""`        |    no    |
+| `pve_ci_storage_location`    | storage location for the cloud-init iso                                         | `string` | `local-zfs` |    no    |
 
 #### Disk Options
 
-| Name                           | Description                      | Type     | Default           | Required |
-| ------------------------------ | -------------------------------- | -------- | ----------------- | :------: |
-| `pve_vm_disk_size`             | size of the VM disk              | `string` | `20G`             |    no    |
-| `pve_vm_disk_storage_location` | storage location for the VM disk | `string` | `local-zfs`       |    no    |
-| `pve_vm_scsihw`                | scsi hardware to use for the VM  | `string` | `virtio-scsi-pci` |    no    |
+| Name                        | Description                      | Type     | Default           | Required |
+| --------------------------- | -------------------------------- | -------- | ----------------- | :------: |
+| `pve_disk_size`             | size of the VM disk              | `string` | `40G`             |    no    |
+| `pve_disk_storage_location` | storage location for the VM disk | `string` | `local-zfs`       |    no    |
+| `pve_scsihw`                | scsi hardware to use for the VM  | `string` | `virtio-scsi-pci` |    no    |
 
 ### AWX Variables
 
@@ -166,10 +165,12 @@ Currently only a single A record will be created.
 
 ## Outputs
 
-| Name         | Description                                | Type           | Sensitive |
-| ------------ | ------------------------------------------ | -------------- | --------- |
-| `ip-address` | The default IPv4 address of the Proxmox VM | `string`       | no        |
-| `dns-record` | The DNS record created in PowerDNS         | `list(string)` | no        |
+| Name             | Description                                | Type           | Sensitive |
+| ---------------- | ------------------------------------------ | -------------- | --------- |
+| `vm_id`          | The ID of the Proxmox VM                   | `number`       | no        |
+| `vm_name`        | The name of the Proxmox VM                 | `string`       | no        |
+| `vm_ip_address`  | The default IPv4 address of the Proxmox VM | `string`       | no        |
+| `vm_dns_records` | The DNS records created in PowerDNS        | `list(string)` | no        |
 
 ## Usage
 
@@ -179,14 +180,14 @@ Currently only a single A record will be created.
 module "test-vm" {
   source = "github.com/Johnny-Knighten/terraform-homelab-pve-vm"
 
-  pve_node    = "node-alpha"
-  pve_vm_name = "test-vm"
-  pve_vm_id   = 400
+  pve_node = "node-alpha"
+  pve_name = "test-vm"
+  pve_id   = 400
 
   pve_is_clone = false
-  pve_vm_iso   = "local:iso/ubuntu-server-22-04.iso"
+  pve_iso      = "local:iso/ubuntu-server-22-04.iso"
 
-  pve_vm_networks = [
+  pve_networks = [
     {
       model  = "virtio"
       bridge = "vmbr0"
@@ -195,10 +196,10 @@ module "test-vm" {
     }
   ]
 
-  pve_vm_memory_size = 8196
-  pve_memory_balloon = 8196
+  pve_memory_size    = 7630
+  pve_memory_balloon = 7630
 
-  pve_vm_disk_size = 40
+  pve_disk_size = "40G"
 
   pdns_zone        = "homelab.lan"
   pdns_record_name = "test-vm"
@@ -211,28 +212,28 @@ module "test-vm" {
 }
 ```
 
-### Using A Template
+### Using A Template (With Cloud-Init)
 
 ```hcl
 module "cloned-vm" {
   source = "github.com/Johnny-Knighten/terraform-homelab-pve-vm"
 
-  pve_node    = "node-alpha"
-  pve_vm_name = "cloned-vm"
-  pve_vm_id   = 401
+  pve_node = "node-alpha"
+  pve_name = "cloned-vm"
+  pve_id   = 401
 
-  pve_is_clone      = true
-  pve_vm_full_clone = true
-  pve_template      = "ubuntu-server-22-04-base-template-homelab"
+  pve_is_clone   = true
+  pve_full_clone = true
+  pve_template   = "ubuntu-server-22-04-base-template-homelab"
 
-  pve_use_cloud_init         = true
-  pve_vm_use_static_ip       = true
-  pve_vm_ip                  = "192.168.25.100"
-  pve_vm_subnet_network_bits = 24
-  pve_vm_gateway             = "192.168.25.1"
-  pve_vm_dns_server          = "192.168.25.2 192.168.25.3 192.168.25.1"
+  pve_use_ci                 = true
+  pve_ci_use_dhcp            = true
+  pve_ci_ip_address          = "192.168.25.100"
+  pve_ci_subnet_network_bits = 24
+  pve_ci_gateway_address     = "192.168.25.1"
+  pve_ci_dns_servers         = "192.168.25.2 192.168.25.3 192.168.25.1"
 
-  pve_vm_networks = [
+  pve_networks = [
     {
       model  = "virtio"
       bridge = "vmbr0"
@@ -241,10 +242,10 @@ module "cloned-vm" {
     }
   ]
 
-  pve_vm_memory_size = 8196
-  pve_memory_balloon = 8196
+  pve_memory_size    = 7630
+  pve_memory_balloon = 7630
 
-  pve_vm_disk_size = 40
+  pve_disk_size = "40G"
 
   pdns_zone        = "homelab.lan"
   pdns_record_name = "cloned-vm"
