@@ -1,3 +1,10 @@
+## [1.3.5](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.3.4...1.3.5) (2024-10-27)
+
+
+### Bug Fixes
+
+* made default vm disk size be 40G to match default template ([70bd4ca](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/70bd4ca3f284a3a509f7a08dd1822f8b28b3afb6))
+
 ## [1.3.4](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.3.3...1.3.4) (2024-10-23)
 
 
