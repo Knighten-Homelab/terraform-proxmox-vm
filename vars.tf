@@ -189,7 +189,7 @@ variable "pve_cloudinit_storage_location" {
 variable "pve_vm_disk_size" {
   type        = string
   description = "size of the VM disk "
-  default     = "20G"
+  default     = "40G"
 }
 
 variable "pve_vm_disk_storage_location" {
