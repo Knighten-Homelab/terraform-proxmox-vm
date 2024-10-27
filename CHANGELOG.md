@@ -1,3 +1,10 @@
+## [1.4.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.3.5...1.4.0) (2024-10-27)
+
+
+### Features
+
+* refined variable and output names ([44b778a](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/44b778ad07af36dc6f15ffc1f7f7a1958d50fc65))
+
 ## [1.3.5](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.3.4...1.3.5) (2024-10-27)
 
 
