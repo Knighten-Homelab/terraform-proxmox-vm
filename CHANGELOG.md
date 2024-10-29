@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.4.0...1.4.1) (2024-10-29)
+
+
+### Bug Fixes
+
+* renamed pve_ci_subnet_network_bits to pve_ci_cidr_prefix_length ([dfe4d62](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/dfe4d62c4e76a02150d7d079781e2f0fce22df70))
+
 ## [1.4.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.3.5...1.4.0) (2024-10-27)
 
 
