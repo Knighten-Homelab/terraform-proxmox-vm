@@ -100,7 +100,7 @@ _See the [versions.tf](versions.tf) for more up to date details._
 
 | Name                 | Description                                                               | Type     | Default | Required |
 | -------------------- | ------------------------------------------------------------------------- | -------- | ------- | :------: |
-| `pve_memory_size`    | amount of memory to allocate to the VM in MB                              | `number` | `2048`  |    no    |
+| `pve_memory_size`    | amount of memory to allocate to the VM in MiB                             | `number` | `2048`  |    no    |
 | `pve_memory_balloon` | whether or not to use memory ballooning (set to 0 to turn off ballooning) | `number` | `0`     |    no    |
 
 #### Network Options
