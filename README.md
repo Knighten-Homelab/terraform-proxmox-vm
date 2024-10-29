@@ -144,6 +144,12 @@ default = [
 | `pve_disk_storage_location` | storage location for the VM disk | `string` | `local-zfs`       |    no    |
 | `pve_scsihw`                | scsi hardware to use for the VM  | `string` | `virtio-scsi-pci` |    no    |
 
+# Agent Options
+
+| Name                        | Description                      | Type     | Default           | Required |
+| --------------------------- | -------------------------------- | -------- | ----------------- | :------: |
+| `pve_use_agent`             | whether or not to use the agent  | `bool`   | `true`            |    no    |
+
 ### AWX Variables
 
 You do not need to supply the numeric IDs for the organization, inventory, and inventory groups, the module will look them up based on the name.
