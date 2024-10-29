@@ -160,9 +160,9 @@ variable "pve_ci_ip_address" {
   default     = ""
 }
 
-variable "pve_ci_subnet_network_bits" {
+variable "pve_ci_cidr_prefix_length" {
   type        = string
-  description = "number of subnet network bits to use for the VM, must be set if using static IP"
+  description = "number of network bits used to represent the subnet mask, must be set if using static IP"
   default     = ""
 }
 

@@ -124,17 +124,17 @@ default = [
 
 #### Cloud-Init Options
 
-| Name                         | Description                                                                     | Type     | Default     | Required |
-| ---------------------------- | ------------------------------------------------------------------------------- | -------- | ----------- | :------: |
-| `pve_use_ci`                 | whether or not to use the cloud_init                                            | `bool`   | `true`      |    no    |
-| `pve_ci_ssh_user`            | ssh user used to provision the VM                                               | `string` | `ansible`   |    no    |
-| `pve_ci_ssh_private_key`     | ssh private key used to provision the VM                                        | `string` | `""`        |    no    |
-| `pve_ci_use_dhcp`            | whether or not to use a static IP or DHCP                                       | `bool`   | `false`     |    no    |
-| `pve_ci_ip_address`          | IP address to use for the VM, must be set if using static IP                    | `string` | `""`        |    no    |
-| `pve_ci_subnet_network_bits` | number of subnet network bits to use for the VM, must be set if using static IP | `string` | `""`        |    no    |
-| `pve_ci_gateway_address`     | gateway to use for the VM, must be set if using static IP                       | `string` | `""`        |    no    |
-| `pve_ci_dns_servers`         | ip of vm's dns server                                                           | `string` | `""`        |    no    |
-| `pve_ci_storage_location`    | storage location for the cloud-init iso                                         | `string` | `local-zfs` |    no    |
+| Name                        | Description                                                                              | Type     | Default     | Required |
+| --------------------------- | ---------------------------------------------------------------------------------------- | -------- | ----------- | :------: |
+| `pve_use_ci`                | whether or not to use the cloud_init                                                     | `bool`   | `true`      |    no    |
+| `pve_ci_ssh_user`           | ssh user used to provision the VM                                                        | `string` | `ansible`   |    no    |
+| `pve_ci_ssh_private_key`    | ssh private key used to provision the VM                                                 | `string` | `""`        |    no    |
+| `pve_ci_use_dhcp`           | whether or not to use a static IP or DHCP                                                | `bool`   | `false`     |    no    |
+| `pve_ci_ip_address`         | IP address to use for the VM, must be set if using static IP                             | `string` | `""`        |    no    |
+| `pve_ci_cidr_prefix_length` | number of network bits used to represent the subnet mask, must be set if using static IP | `string` | `""`        |    no    |
+| `pve_ci_gateway_address`    | gateway to use for the VM, must be set if using static IP                                | `string` | `""`        |    no    |
+| `pve_ci_dns_servers`        | ip of vm's dns server                                                                    | `string` | `""`        |    no    |
+| `pve_ci_storage_location`   | storage location for the cloud-init iso                                                  | `string` | `local-zfs` |    no    |
 
 #### Disk Options
 
@@ -231,7 +231,7 @@ module "cloned-vm" {
   pve_use_ci                 = true
   pve_ci_use_dhcp            = true
   pve_ci_ip_address          = "192.168.25.100"
-  pve_ci_subnet_network_bits = 24
+  pve_ci_cidr_prefix_length  = "24"
   pve_ci_gateway_address     = "192.168.25.1"
   pve_ci_dns_servers         = "192.168.25.2 192.168.25.3 192.168.25.1"
 
@@ -245,7 +245,7 @@ module "cloned-vm" {
   ]
 
   pve_memory_size    = 7630
-  pve_memory_balloon = 7630
+  pve_memory_balloon = 0
 
   pve_disk_size = "40G"
 
