@@ -42,7 +42,7 @@ resource "proxmox_vm_qemu" "pve_vm" {
   ssh_user               = var.pve_use_ci ? var.pve_ci_ssh_user : null
   ssh_private_key        = var.pve_use_ci ? var.pve_ci_ssh_private_key : null
   ciuser                 = var.pve_use_ci ? var.pve_ci_ssh_user : null
-  cipassword             = null
+  cipassword             = var.pve_ci_user_password
   ciupgrade              = true
   ipconfig0              = var.pve_use_ci ? (var.pve_ci_use_dhcp ? "ip=dhcp" : format("ip=%s,gw=%s", join("/", [var.pve_ci_ip_address, var.pve_ci_cidr_prefix_length]), var.pve_ci_gateway_address)) : null
   nameserver             = var.pve_use_ci ? var.pve_ci_dns_servers : null
