@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.5.2...1.5.3) (2024-11-03)
+
+
+### Bug Fixes
+
+* renamed cipassword and ciusern var ([86d73ca](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/86d73ca432a8f8a417656d384446f197e4662d6c))
+
 ## [1.5.2](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.5.1...1.5.2) (2024-11-03)
 
 
