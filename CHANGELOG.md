@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.5.0...1.5.1) (2024-11-03)
+
+
+### Bug Fixes
+
+* removed ciuser and cipassword vars for cleaning provisioning ([242b49e](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/242b49e98acecb0e08e7b4f2d4b74d601e0a1d43))
+
 ## [1.5.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.4.1...1.5.0) (2024-11-03)
 
 
