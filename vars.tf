@@ -148,13 +148,13 @@ variable "pve_ci_ssh_private_key" {
   default     = ""
 }
 
-variable "ci_user" {
+variable "pve_ci_user" {
   type        = string
   description = "cloud-init user"
   default     = null
 }
 
-variable "ci_password" {
+variable "pve_ci_password" {
   type        = string
   description = "cloud-init password"
   default     = null
