@@ -142,12 +142,6 @@ variable "pve_ci_ssh_user" {
   default     = "ansible"
 }
 
-variable "pve_ci_user_password" {
-  type        = string
-  description = "password for the ssh user"
-  default     = null
-}
-
 variable "pve_ci_ssh_private_key" {
   type        = string
   description = "ssh private key to used to provision the VM"
