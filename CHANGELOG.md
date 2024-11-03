@@ -1,3 +1,10 @@
+## [1.5.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.4.1...1.5.0) (2024-11-03)
+
+
+### Features
+
+* added pve_ci_user_password var ([a91ea52](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/a91ea52049934cab6506a54d1547057d8d590ffa))
+
 ## [1.4.1](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.4.0...1.4.1) (2024-10-29)
 
 
