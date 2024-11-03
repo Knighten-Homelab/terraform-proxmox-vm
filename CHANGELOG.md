@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.5.1...1.5.2) (2024-11-03)
+
+
+### Bug Fixes
+
+* reintroduced cipassword and ciuser but made default null ([47257f6](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/47257f63d8e9952e178694a68947124e4c0c5d4e))
+
 ## [1.5.1](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.5.0...1.5.1) (2024-11-03)
 
 
