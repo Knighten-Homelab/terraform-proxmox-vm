@@ -148,6 +148,18 @@ variable "pve_ci_ssh_private_key" {
   default     = ""
 }
 
+variable "ci_user" {
+  type        = string
+  description = "cloud-init user"
+  default     = null
+}
+
+variable "ci_password" {
+  type        = string
+  description = "cloud-init password"
+  default     = null
+}
+
 variable "pve_ci_use_dhcp" {
   type        = bool
   description = "whether or not to use a static IP or DHCP"
