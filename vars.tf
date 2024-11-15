@@ -39,7 +39,7 @@ variable "pve_is_clone" {
 variable "pve_template" {
   type        = string
   description = "name of the PVE template to clone"
-  default     = "ubuntu-server-22-04-base-template-homelab"
+  default     = "debian-12-cloud-init-template"
 }
 
 variable "pve_full_clone" {
@@ -157,7 +157,7 @@ variable "pve_ci_ssh_keys" {
 variable "pve_ci_user" {
   type        = string
   description = "cloud-init user"
-  default     = null
+  default     = "ansible"
 }
 
 variable "pve_ci_password" {
