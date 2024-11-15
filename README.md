@@ -25,8 +25,6 @@ Here are some of the opinionated decisions made in this module (this is not an e
     - Only Cloud-Init for VM Provisioning
     - Only Allows One ipconfig to be configured
     - Always Upgrades on First Boot
-    - Only Uses SSH For Provisioning (No Passwords)
-    - Provisioner User Name Matches SSH Name
   - Disks
     - Only One Storage Disk That is Virtio-SCSI Mapped to scsi0
     - ide0 is the CD-ROM Used When Using an ISO
