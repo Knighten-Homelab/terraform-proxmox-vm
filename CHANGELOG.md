@@ -1,3 +1,10 @@
+## [1.6.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.5.3...1.6.0) (2024-11-15)
+
+
+### Features
+
+* exposed variable to control cloudinit ssh authorized keys ([3972810](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/397281055096646884c79d00b939933e4e8e5c18))
+
 ## [1.5.3](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.5.2...1.5.3) (2024-11-03)
 
 
