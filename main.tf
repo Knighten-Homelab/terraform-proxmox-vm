@@ -85,6 +85,14 @@ resource "proxmox_vm_qemu" "pve_vm" {
       }
     }
   }
+
+  dynamic "serial" {
+    for_each = var.pve_add_serial ? [1] : []
+    content {
+      id   = var.pve_serial_id
+      type = var.pve_serial_type
+    }
+  }
 }
 
 resource "powerdns_record" "a_record" {

@@ -230,6 +230,26 @@ variable "pve_use_agent" {
   default     = 1
 }
 
+# Serial Options
+
+variable "pve_add_serial" {
+  type        = bool
+  description = "whether or not to add a serial device"
+  default     = false
+}
+
+variable "pve_serial_type" {
+  type        = string
+  description = "type of serial device to add"
+  default     = "socket"
+}
+
+variable "pve_serial_id" {
+  type        = number
+  description = "id of the serial device"
+  default     = 0
+}
+
 #################
 # AWX Variables #
 #################
