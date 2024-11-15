@@ -25,6 +25,7 @@ Here are some of the opinionated decisions made in this module (this is not an e
     - Only Cloud-Init for VM Provisioning
     - Only Allows One ipconfig to be configured
     - Always Upgrades on First Boot
+    - Only can add a single serial device
   - Disks
     - Only One Storage Disk That is Virtio-SCSI Mapped to scsi0
     - ide0 is the CD-ROM Used When Using an ISO
@@ -150,6 +151,14 @@ default = [
 | Name            | Description                     | Type   | Default | Required |
 | --------------- | ------------------------------- | ------ | ------- | :------: |
 | `pve_use_agent` | whether or not to use the agent | `bool` | `true`  |    no    |
+
+# Serial Options
+
+| Name              | Description                    | Type     | Default  | Required |
+| ----------------- | ------------------------------ | -------- | -------- | :------: |
+| `pve_add_serial`  | whether or not to add a serial | `bool`   | `false`  |    no    |
+| `pve_serial_type` | type of serial to add          | `string` | `socket` |    no    |
+| `pve_serial_id`   | id of the serial to add        | `string` | `1`      |    no    |
 
 ### AWX Variables
 
