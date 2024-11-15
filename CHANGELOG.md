@@ -1,3 +1,10 @@
+## [1.7.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.6.1...1.7.0) (2024-11-15)
+
+
+### Features
+
+* added the ability to add a single serial device ([5cbef7f](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/5cbef7fe10eb6b7da4618d7f00ed31512dc5e613))
+
 ## [1.6.1](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.6.0...1.6.1) (2024-11-15)
 
 
