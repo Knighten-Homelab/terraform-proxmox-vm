@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.6.0...1.6.1) (2024-11-15)
+
+
+### Bug Fixes
+
+* changed default pve_ci_user to ansible and changed default pve templat to debian-12 ([7888548](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/7888548a5e67706fa0e0fc341bbe807330276051))
+
 ## [1.6.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.5.3...1.6.0) (2024-11-15)
 
 
