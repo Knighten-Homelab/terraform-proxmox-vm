@@ -71,12 +71,12 @@ _See the [versions.tf](versions.tf) for more up to date details._
 
 #### Cloning and Template Variables
 
-| Name             | Description                                                   | Type     | Default                                     | Required |
-| ---------------- | ------------------------------------------------------------- | -------- | ------------------------------------------- | :------: |
-| `pve_is_clone`   | Flag to determine if the VM is a clone or not (based off iso) | `bool`   | `true`                                      |    no    |
-| `pve_template`   | name of the PVE template to clone                             | `string` | `ubuntu-server-22-04-base-template-homelab` |    no    |
-| `pve_full_clone` | whether or not to do a full clone of the template             | `bool`   | `true`                                      |    no    |
-| `pve_iso`        | iso to use for the VM                                         | `string` | `""`                                        |    no    |
+| Name             | Description                                                   | Type     | Default                         | Required |
+| ---------------- | ------------------------------------------------------------- | -------- | ------------------------------- | :------: |
+| `pve_is_clone`   | Flag to determine if the VM is a clone or not (based off iso) | `bool`   | `true`                          |    no    |
+| `pve_template`   | name of the PVE template to clone                             | `string` | `debian-12-cloud-init-template` |    no    |
+| `pve_full_clone` | whether or not to do a full clone of the template             | `bool`   | `true`                          |    no    |
+| `pve_iso`        | iso to use for the VM                                         | `string` | `""`                            |    no    |
 
 #### Boot Options
 
@@ -122,17 +122,20 @@ default = [
 
 #### Cloud-Init Options
 
-| Name                        | Description                                                                              | Type     | Default     | Required |
-| --------------------------- | ---------------------------------------------------------------------------------------- | -------- | ----------- | :------: |
-| `pve_use_ci`                | whether or not to use the cloud_init                                                     | `bool`   | `true`      |    no    |
-| `pve_ci_ssh_user`           | ssh user used to provision the VM                                                        | `string` | `ansible`   |    no    |
-| `pve_ci_ssh_private_key`    | ssh private key used to provision the VM                                                 | `string` | `""`        |    no    |
-| `pve_ci_use_dhcp`           | whether or not to use a static IP or DHCP                                                | `bool`   | `false`     |    no    |
-| `pve_ci_ip_address`         | IP address to use for the VM, must be set if using static IP                             | `string` | `""`        |    no    |
-| `pve_ci_cidr_prefix_length` | number of network bits used to represent the subnet mask, must be set if using static IP | `string` | `""`        |    no    |
-| `pve_ci_gateway_address`    | gateway to use for the VM, must be set if using static IP                                | `string` | `""`        |    no    |
-| `pve_ci_dns_servers`        | ip of vm's dns server                                                                    | `string` | `""`        |    no    |
-| `pve_ci_storage_location`   | storage location for the cloud-init iso                                                  | `string` | `local-zfs` |    no    |
+| Name                        | Description                                                                              | Type           | Default     | Required |
+| --------------------------- | ---------------------------------------------------------------------------------------- | -------------- | ----------- | :------: |
+| `pve_use_ci`                | whether or not to use the cloud_init                                                     | `bool`         | `true`      |    no    |
+| `pve_ci_ssh_user`           | ssh user used to provision the VM                                                        | `string`       | `ansible`   |    no    |
+| `pve_ci_ssh_private_key`    | ssh private key used to provision the VM                                                 | `string`       | `""`        |    no    |
+| `pve_ci_ssh_keys`           | ssh public keys to assigned to ci user authorized_keys                                   | `list(string)` | `[]`        |    no    |
+| `pve_ci_user`               | cloud-init user                                                                          | `string`       | `ansible`   |    no    |
+| `pve_ci_password`           | cloud-init password                                                                      | `string`       | `null`      |    no    |
+| `pve_ci_use_dhcp`           | whether or not to use a static IP or DHCP                                                | `bool`         | `false`     |    no    |
+| `pve_ci_ip_address`         | IP address to use for the VM, must be set if using static IP                             | `string`       | `""`        |    no    |
+| `pve_ci_cidr_prefix_length` | number of network bits used to represent the subnet mask, must be set if using static IP | `string`       | `""`        |    no    |
+| `pve_ci_gateway_address`    | gateway to use for the VM, must be set if using static IP                                | `string`       | `""`        |    no    |
+| `pve_ci_dns_servers`        | ip of vm's dns server                                                                    | `string`       | `""`        |    no    |
+| `pve_ci_storage_location`   | storage location for the cloud-init iso                                                  | `string`       | `local-zfs` |    no    |
 
 #### Disk Options
 
@@ -144,9 +147,9 @@ default = [
 
 # Agent Options
 
-| Name                        | Description                      | Type     | Default           | Required |
-| --------------------------- | -------------------------------- | -------- | ----------------- | :------: |
-| `pve_use_agent`             | whether or not to use the agent  | `bool`   | `true`            |    no    |
+| Name            | Description                     | Type   | Default | Required |
+| --------------- | ------------------------------- | ------ | ------- | :------: |
+| `pve_use_agent` | whether or not to use the agent | `bool` | `true`  |    no    |
 
 ### AWX Variables
 
