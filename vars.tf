@@ -148,6 +148,12 @@ variable "pve_ci_ssh_private_key" {
   default     = ""
 }
 
+variable "pve_ci_ssh_keys" {
+  type        = list(string)
+  description = "ssh public keys to assigned to ci user authorized_keys"
+  default     = []
+}
+
 variable "pve_ci_user" {
   type        = string
   description = "cloud-init user"
