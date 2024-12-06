@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.7.0...1.7.1) (2024-12-06)
+
+
+### Bug Fixes
+
+* updated required_version for tf ([5819ce7](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/5819ce773ca6209c629746405dab1866daa14ba6))
+
 ## [1.7.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.6.1...1.7.0) (2024-11-15)
 
 
