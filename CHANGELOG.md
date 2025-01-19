@@ -1,3 +1,14 @@
+## [2.0.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.7.1...2.0.0) (2025-01-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* removed AWX resources from module
+
+### Features
+
+* removed AWX resources from module ([eef9582](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/eef9582a731e7935b38a3199e9b492cace344ffe))
+
 ## [1.7.1](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.7.0...1.7.1) (2024-12-06)
 
 
