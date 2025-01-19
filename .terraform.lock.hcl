@@ -1,28 +1,6 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/denouche/awx" {
-  version     = "0.19.0"
-  constraints = "0.19.0"
-  hashes = [
-    "h1:33I6YN/UaM+tdYC3BUMmeOJtZeHjIbzeSifoF9sNU3E=",
-    "zh:031f3fdfb6d753e11593b4f5bbe95a345def56ab6749446f467af5964cb0f4ab",
-    "zh:0516b98fba3df60d68786e70490dbf0837a4019db1e925d7fcdb077dd2dbe431",
-    "zh:1e8c9ec7417d93825f954162139409f6f96eb23d83d9ff8366b9c23a537167e4",
-    "zh:3c31573a2c6f9b82aa3a88fdef0b637af17d0bcf5c3b4ddb0dfdba0a4df6874e",
-    "zh:452e348570017e24574f913b108ba0484b56bfe623468e545affe7572875a761",
-    "zh:68112d9ff5025ea1446c58159466540f81ffbaf394cb802c1579d723b426516f",
-    "zh:73a7407043e715299d46f29dc614c7b8a480ca5fd6b78da3df3d85febc031f62",
-    "zh:7783c6838d1e10a5d4519fa90177269d1db38cb88b408d53c68ef21a680f95f1",
-    "zh:7875f68f0e9f575d960274395d55ff9064df5649eaddc5c0f2d815277a98863d",
-    "zh:a96d4992beb3258f1e7568e9c6087fb737272f0e7b4952391c7bfcbcdeb4cd61",
-    "zh:a9f070a0e7fc4263a86762232b7a05de29c44d79ca67b7e0aadbb358421b5551",
-    "zh:eb2de96b4b72316c4016b578093a9274881ad3922e766e1dafd8e9944a65e206",
-    "zh:ecbda0c82ba75f6335fe335b110100d9a381521a7dccf12780d603c7fb822f10",
-    "zh:efb6d3e37820b4aa72a1d6e33859b8de29639d0fcba10fa9f1abc88f18a102fd",
-  ]
-}
-
 provider "registry.terraform.io/pan-net/powerdns" {
   version     = "1.5.0"
   constraints = "1.5.0"

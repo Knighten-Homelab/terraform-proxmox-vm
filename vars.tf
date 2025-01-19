@@ -250,35 +250,6 @@ variable "pve_serial_id" {
   default     = 0
 }
 
-#################
-# AWX Variables #
-#################
-
-variable "awx_organization" {
-  type        = string
-  description = "name of the AWX organization to create the host in"
-}
-
-variable "awx_inventory" {
-  type        = string
-  description = "name of the AWX inventory to create the host in"
-}
-
-variable "awx_host_groups" {
-  type        = list(string)
-  description = "comma separated list of AWX host groups to add the host to"
-}
-
-variable "awx_host_name" {
-  type        = string
-  description = "name of the AWX host to create"
-}
-
-variable "awx_host_description" {
-  type        = string
-  description = "description of the AWX host to create "
-}
-
 ############
 # PowerDNS #
 ############

@@ -1,24 +1,21 @@
 # Homelab Proxmox VM Terraform Module
 
-Terraform module which creates a ProxMox VM, registers it to AWX, and creates a PowerDNS A record.
+Terraform module which creates a ProxMox VM and a PowerDNS A record.
 
 This module is designed to be used with the technology stack I utilize in my homelab. It assumes you are using the following technologies:
 
 - [Proxmox](https://www.proxmox.com/en/)
   - Hypervisor
-- [AWX](https://github.com/ansible/awx)
-  - Ansible Automation Platform
-  - Upstream project for Ansible Tower
 - [PowerDNS](https://www.powerdns.com/)
   - DNS Server
 
-The main goal of this module was to streamline my VM creation process by: providing sane default values, automating integration with my primary automation platform, and aiding service discovery via DNS. This module is not designed to be used by others as it is highly opinionated and tailored to my specific use case; however, it may be useful as a reference for others.
+The main goal of this module was to streamline my VM creation process by: providing sane default values and aiding service discovery via DNS. This module is not designed to be used by others as it is highly opinionated and tailored to my specific use case; however, it may be useful as a reference for others.
 
 ## Opinionated Decisions
 
 Here are some of the opinionated decisions made in this module (this is not an exhaustive list):
 
-- Technology Stack: Proxmox, AWX, and PowerDNS
+- Technology Stack: Proxmox and PowerDNS
 - VM Configuration:
   - Limited Number of CPU Options
   - Cloud-Init Use
@@ -33,9 +30,7 @@ Here are some of the opinionated decisions made in this module (this is not an e
 - DNS
   - Only Creates Single A Record
   - TTL = 60 and Not Configurable
-- AWX
-  - All Organizations, Inventories, and Inventory Groups Must Already Exist
-  - Only adds ansible_host and hostname To Host Variables
+
 
 ## Requirements
 
@@ -51,7 +46,6 @@ The table below lists the providers required by this module.
 | -------- | ---------------- | ----------- |
 | proxmox  | telmate/proxmox  | = 3.0.1-rc4 |
 | powerdns | pan-net/powerdns | = 1.5.0     |
-| awx      | denouche/awx     | = 0.19.0    |
 
 You most configure the above providers (URLs, credentials, ...) in your terraform configuration.
 
@@ -160,18 +154,6 @@ default = [
 | `pve_serial_type` | type of serial to add          | `string` | `socket` |    no    |
 | `pve_serial_id`   | id of the serial to add        | `string` | `1`      |    no    |
 
-### AWX Variables
-
-You do not need to supply the numeric IDs for the organization, inventory, and inventory groups, the module will look them up based on the name.
-
-| Name                   | Description                                                | Type           | Default | Required |
-| ---------------------- | ---------------------------------------------------------- | -------------- | ------- | :------: |
-| `awx_organization`     | name of the AWX organization to create the host in         | `string`       | n/a     |   yes    |
-| `awx_inventory`        | name of the AWX inventory to create the host in            | `string`       | n/a     |   yes    |
-| `awx_host_groups`      | comma separated list of AWX host groups to add the host to | `list(string)` | n/a     |   yes    |
-| `awx_host_name`        | name of the AWX host to create                             | `string`       | n/a     |   yes    |
-| `awx_host_description` | description of the AWX host to create                      | `string`       | n/a     |   yes    |
-
 ### PowerDNS Variables
 
 Currently only a single A record will be created.
@@ -221,12 +203,6 @@ module "test-vm" {
 
   pdns_zone        = "homelab.lan"
   pdns_record_name = "test-vm"
-
-  awx_organization     = "Homelab"
-  awx_inventory        = "Homelab Endpoints"
-  awx_host_groups      = ["proxmox-hosts"]
-  awx_host_name        = "test-vm"
-  awx_host_description = "A test VM created by Terraform"
 }
 ```
 
@@ -267,11 +243,5 @@ module "cloned-vm" {
 
   pdns_zone        = "homelab.lan"
   pdns_record_name = "cloned-vm"
-
-  awx_organization     = "Homelab"
-  awx_inventory        = "Homelab Endpoints"
-  awx_host_groups      = ["proxmox-hosts"]
-  awx_host_name        = "cloned-vm"
-  awx_host_description = "A cloned VM created by Terraform"
 }
 ```

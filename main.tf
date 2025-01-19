@@ -102,31 +102,3 @@ resource "powerdns_record" "a_record" {
   ttl     = 60
   records = [proxmox_vm_qemu.pve_vm.default_ipv4_address]
 }
-
-data "awx_organization" "homelab" {
-  name = var.awx_organization
-}
-
-data "awx_inventory" "homelab_endpoints" {
-  name            = var.awx_inventory
-  organization_id = data.awx_organization.homelab.id
-}
-
-data "awx_inventory_group" "groups" {
-  for_each     = toset(var.awx_host_groups)
-  name         = each.value
-  inventory_id = data.awx_inventory.homelab_endpoints.id
-}
-
-resource "awx_host" "awx_pve_vm" {
-  name         = var.awx_host_name
-  description  = var.awx_host_description
-  inventory_id = data.awx_organization.homelab.id
-  group_ids    = [for group in data.awx_inventory_group.groups : group.id]
-  enabled      = true
-  variables    = <<YAML
----
-ansible_host: ${proxmox_vm_qemu.pve_vm.default_ipv4_address}
-hostname: ${var.pdns_record_name}.${var.pdns_zone}
-YAML
-}
