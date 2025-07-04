@@ -1,3 +1,10 @@
+## [2.1.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/2.0.0...2.1.0) (2025-07-04)
+
+
+### Features
+
+* add GitHub CLI to devcontainer ([#3](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/issues/3)) ([7d1d06b](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/commit/7d1d06bae27d659a957dd330d0237790bccd035a))
+
 ## [2.0.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/1.7.1...2.0.0) (2025-01-19)
 
 
