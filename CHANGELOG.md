@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.1.1...2.1.2) (2025-07-04)
+
+
+### Bug Fixes
+
+* correct documentation and default value discrepancies ([#4](https://github.com/Knighten-Homelab/terraform-proxmox-vm/issues/4)) ([1950e35](https://github.com/Knighten-Homelab/terraform-proxmox-vm/commit/1950e35f07cc00c6dd75e1d8b4386c1a27ba9d89))
+
 ## [2.1.1](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.1.0...2.1.1) (2025-07-04)
 
 
