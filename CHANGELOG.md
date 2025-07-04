@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.1.0...2.1.1) (2025-07-04)
+
+
+### Bug Fixes
+
+* correct repository URL in package.json ([27a0400](https://github.com/Knighten-Homelab/terraform-proxmox-vm/commit/27a04002310f2cbe2ca3998ef248729465911c18))
+
 ## [2.1.0](https://github.com/Johnny-Knighten/terraform-homelab-pve-vm/compare/2.0.0...2.1.0) (2025-07-04)
 
 
