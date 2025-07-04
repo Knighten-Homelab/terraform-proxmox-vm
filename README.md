@@ -125,7 +125,7 @@ default = [
 | `pve_ci_ssh_keys`           | ssh public keys to assigned to ci user authorized_keys                                   | `list(string)` | `[]`        |    no    |
 | `pve_ci_user`               | cloud-init user                                                                          | `string`       | `ansible`   |    no    |
 | `pve_ci_password`           | cloud-init password                                                                      | `string`       | `null`      |    no    |
-| `pve_ci_use_dhcp`           | whether or not to use a static IP or DHCP                                                | `bool`         | `false`     |    no    |
+| `pve_ci_use_dhcp`           | whether or not to use a static IP or DHCP                                                | `bool`         | `true`      |    no    |
 | `pve_ci_ip_address`         | IP address to use for the VM, must be set if using static IP                             | `string`       | `""`        |    no    |
 | `pve_ci_cidr_prefix_length` | number of network bits used to represent the subnet mask, must be set if using static IP | `string`       | `""`        |    no    |
 | `pve_ci_gateway_address`    | gateway to use for the VM, must be set if using static IP                                | `string`       | `""`        |    no    |
@@ -144,7 +144,7 @@ default = [
 
 | Name            | Description                     | Type   | Default | Required |
 | --------------- | ------------------------------- | ------ | ------- | :------: |
-| `pve_use_agent` | whether or not to use the agent | `bool` | `true`  |    no    |
+| `pve_use_agent` | whether or not to use the agent | `number` | `1`  |    no    |
 
 # Serial Options
 
@@ -152,7 +152,7 @@ default = [
 | ----------------- | ------------------------------ | -------- | -------- | :------: |
 | `pve_add_serial`  | whether or not to add a serial | `bool`   | `false`  |    no    |
 | `pve_serial_type` | type of serial to add          | `string` | `socket` |    no    |
-| `pve_serial_id`   | id of the serial to add        | `string` | `1`      |    no    |
+| `pve_serial_id`   | id of the serial to add        | `number` | `0`      |    no    |
 
 ### PowerDNS Variables
 

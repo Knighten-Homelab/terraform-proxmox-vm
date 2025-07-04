@@ -99,7 +99,7 @@ variable "pve_sockets" {
 variable "pve_memory_size" {
   type        = number
   description = "amount of memory to allocate to the VM in MiB"
-  default     = 3815
+  default     = 2048
 }
 
 variable "pve_memory_balloon" {
