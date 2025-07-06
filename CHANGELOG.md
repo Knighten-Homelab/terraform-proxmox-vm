@@ -1,3 +1,10 @@
+## [2.2.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.1.2...2.2.0) (2025-07-06)
+
+
+### Features
+
+* add input validation for critical variables ([#5](https://github.com/Knighten-Homelab/terraform-proxmox-vm/issues/5)) ([e443e39](https://github.com/Knighten-Homelab/terraform-proxmox-vm/commit/e443e3965b13523f5bf4866104bcdf35b25df05d))
+
 ## [2.1.2](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.1.1...2.1.2) (2025-07-04)
 
 
