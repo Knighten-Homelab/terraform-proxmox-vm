@@ -1,3 +1,10 @@
+## [2.3.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.2.0...2.3.0) (2025-07-06)
+
+
+### Features
+
+* add static IP configuration validation ([#6](https://github.com/Knighten-Homelab/terraform-proxmox-vm/issues/6)) ([15a11ee](https://github.com/Knighten-Homelab/terraform-proxmox-vm/commit/15a11eee2402529d773fe596ee816798294cb90c))
+
 ## [2.2.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.1.2...2.2.0) (2025-07-06)
 
 
