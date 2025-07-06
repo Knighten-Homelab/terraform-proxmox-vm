@@ -1,3 +1,10 @@
+## [2.4.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.3.0...2.4.0) (2025-07-06)
+
+
+### Features
+
+* add optional DNS record creation ([#7](https://github.com/Knighten-Homelab/terraform-proxmox-vm/issues/7)) ([830e933](https://github.com/Knighten-Homelab/terraform-proxmox-vm/commit/830e933a5b1d30cf71b75dc6ac156b6d80c66bb2))
+
 ## [2.3.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.2.0...2.3.0) (2025-07-06)
 
 
