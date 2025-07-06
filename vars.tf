@@ -278,6 +278,12 @@ variable "pve_serial_id" {
 # PowerDNS #
 ############
 
+variable "create_dns_record" {
+  type        = bool
+  description = "whether to create a PowerDNS A record for the VM"
+  default     = true
+}
+
 variable "pdns_zone" {
   type        = string
   description = "name of the PowerDNS zone to create the record in"

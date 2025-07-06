@@ -11,5 +11,5 @@ output "vm_ip_address" {
 }
 
 output "vm_dns_records" {
-  value = powerdns_record.a_record.records
+  value = length(powerdns_record.a_record) > 0 ? powerdns_record.a_record[0].records : []
 }

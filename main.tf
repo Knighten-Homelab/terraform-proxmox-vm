@@ -108,6 +108,7 @@ resource "proxmox_vm_qemu" "pve_vm" {
 }
 
 resource "powerdns_record" "a_record" {
+  count   = var.create_dns_record ? 1 : 0
   zone    = "${var.pdns_zone}."
   name    = "${var.pdns_record_name}.${var.pdns_zone}."
   type    = "A"
