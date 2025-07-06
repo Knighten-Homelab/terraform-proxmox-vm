@@ -80,6 +80,10 @@ variable "pve_core_count" {
   type        = string
   description = "number of cores to allocate to the VM"
   default     = "2"
+  validation {
+    condition     = can(tonumber(var.pve_core_count)) && tonumber(var.pve_core_count) >= 1
+    error_message = "pve_core_count must be a valid number greater than or equal to 1."
+  }
 }
 
 variable "pve_cpu_type" {
@@ -100,6 +104,10 @@ variable "pve_memory_size" {
   type        = number
   description = "amount of memory to allocate to the VM in MiB"
   default     = 2048
+  validation {
+    condition     = var.pve_memory_size >= 512
+    error_message = "pve_memory_size must be at least 512 MiB."
+  }
 }
 
 variable "pve_memory_balloon" {
@@ -176,12 +184,20 @@ variable "pve_ci_ip_address" {
   type        = string
   description = "IP address to use for the VM, must be set if using static IP"
   default     = ""
+  validation {
+    condition     = var.pve_ci_ip_address == "" || can(cidrhost("${var.pve_ci_ip_address}/32", 0))
+    error_message = "pve_ci_ip_address must be a valid IPv4 address or empty string."
+  }
 }
 
 variable "pve_ci_cidr_prefix_length" {
   type        = string
   description = "number of network bits used to represent the subnet mask, must be set if using static IP"
   default     = ""
+  validation {
+    condition     = var.pve_ci_cidr_prefix_length == "" || (can(tonumber(var.pve_ci_cidr_prefix_length)) && tonumber(var.pve_ci_cidr_prefix_length) >= 1 && tonumber(var.pve_ci_cidr_prefix_length) <= 32)
+    error_message = "pve_ci_cidr_prefix_length must be a number between 1 and 32, or empty string."
+  }
 }
 
 variable "pve_ci_gateway_address" {
@@ -208,6 +224,10 @@ variable "pve_disk_size" {
   type        = string
   description = "size of the VM disk (integer followed by M, G, T,...)"
   default     = "40G"
+  validation {
+    condition     = can(regex("^[0-9]+[KMGT]$", var.pve_disk_size))
+    error_message = "pve_disk_size must be a number followed by K, M, G, or T (e.g., '40G', '512M', '1T')."
+  }
 }
 
 variable "pve_disk_storage_location" {
