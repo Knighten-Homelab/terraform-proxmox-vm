@@ -293,3 +293,13 @@ variable "pdns_record_name" {
   type        = string
   description = "name of the PowerDNS record to create"
 }
+
+variable "pdns_ttl" {
+  type        = number
+  description = "TTL (Time To Live) for the PowerDNS record in seconds"
+  default     = 60
+  validation {
+    condition     = var.pdns_ttl >= 30 && var.pdns_ttl <= 86400
+    error_message = "pdns_ttl must be between 30 and 86400 seconds (24 hours)."
+  }
+}
