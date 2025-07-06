@@ -112,6 +112,6 @@ resource "powerdns_record" "a_record" {
   zone    = "${var.pdns_zone}."
   name    = "${var.pdns_record_name}.${var.pdns_zone}."
   type    = "A"
-  ttl     = 60
+  ttl     = var.pdns_ttl
   records = [proxmox_vm_qemu.pve_vm.default_ipv4_address]
 }
