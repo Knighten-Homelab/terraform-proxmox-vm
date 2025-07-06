@@ -1,4 +1,16 @@
 resource "proxmox_vm_qemu" "pve_vm" {
+  # Validate static IP configuration dependencies
+  lifecycle {
+    precondition {
+      condition = !var.pve_use_ci || var.pve_ci_use_dhcp || (
+        var.pve_ci_ip_address != "" &&
+        var.pve_ci_cidr_prefix_length != "" &&
+        var.pve_ci_gateway_address != ""
+      )
+      error_message = "When using static IP configuration (pve_ci_use_dhcp = false), all three variables must be provided: pve_ci_ip_address, pve_ci_cidr_prefix_length, and pve_ci_gateway_address."
+    }
+  }
+
   # Minimum Required Fields
   name        = var.pve_name
   target_node = var.pve_node

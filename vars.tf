@@ -204,6 +204,10 @@ variable "pve_ci_gateway_address" {
   type        = string
   description = "gateway to use for the VM, must be set if using static IP"
   default     = ""
+  validation {
+    condition     = var.pve_ci_gateway_address == "" || can(cidrhost("${var.pve_ci_gateway_address}/32", 0))
+    error_message = "pve_ci_gateway_address must be a valid IPv4 address or empty string."
+  }
 }
 
 variable "pve_ci_dns_servers" {
