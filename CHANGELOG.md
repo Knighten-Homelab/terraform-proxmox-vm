@@ -1,3 +1,10 @@
+## [2.5.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.4.0...2.5.0) (2025-07-06)
+
+
+### Features
+
+* add configurable DNS TTL ([#8](https://github.com/Knighten-Homelab/terraform-proxmox-vm/issues/8)) ([a265e3e](https://github.com/Knighten-Homelab/terraform-proxmox-vm/commit/a265e3e2f81b351a962df6e6f728f937d7e04d4c))
+
 ## [2.4.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.3.0...2.4.0) (2025-07-06)
 
 
