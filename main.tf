@@ -29,9 +29,11 @@ resource "proxmox_vm_qemu" "pve_vm" {
   bootdisk = var.pve_boot_disk
 
   # CPU Options
-  cores   = var.pve_core_count
-  sockets = var.pve_sockets
-  cpu     = var.pve_cpu_type
+  cpu {
+    cores   = var.pve_core_count
+    sockets = var.pve_sockets
+    type    = var.pve_cpu_type
+  }
 
   # Memory Options
   memory  = var.pve_memory_size
@@ -39,8 +41,9 @@ resource "proxmox_vm_qemu" "pve_vm" {
 
   # Network Options
   dynamic "network" {
-    for_each = var.pve_networks
+    for_each = { for idx, net in var.pve_networks : idx => net }
     content {
+      id     = network.key
       model  = network.value.model
       bridge = network.value.bridge
       tag    = lookup(network.value, "tag", null)
