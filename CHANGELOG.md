@@ -1,3 +1,10 @@
+## [2.6.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.5.0...2.6.0) (2025-07-09)
+
+
+### Features
+
+* upgrade Proxmox provider to 3.0.2-rc01 ([#9](https://github.com/Knighten-Homelab/terraform-proxmox-vm/issues/9)) ([e3b3bf7](https://github.com/Knighten-Homelab/terraform-proxmox-vm/commit/e3b3bf76b991a3b2ad9ef7be03136f64514de790))
+
 ## [2.5.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.4.0...2.5.0) (2025-07-06)
 
 
