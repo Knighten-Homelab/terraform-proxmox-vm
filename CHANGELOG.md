@@ -1,3 +1,10 @@
+## [2.6.1](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.6.0...2.6.1) (2025-07-10)
+
+
+### Bug Fixes
+
+* streamline pre-commit hook ([#10](https://github.com/Knighten-Homelab/terraform-proxmox-vm/issues/10)) ([356572a](https://github.com/Knighten-Homelab/terraform-proxmox-vm/commit/356572aa42a220dc4d4175598a439bc828da5020))
+
 ## [2.6.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.5.0...2.6.0) (2025-07-09)
 
 
