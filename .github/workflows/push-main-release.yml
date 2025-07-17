@@ -9,6 +9,11 @@ on:
     paths-ignore:
       - 'CHANGELOG.md'
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 jobs:
   github-release:
     uses: Knighten-Homelab/gha-reusable-workflows/.github/workflows/semantic-release-to-gh.yaml@main
