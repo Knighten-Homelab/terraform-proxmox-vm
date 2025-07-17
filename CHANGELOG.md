@@ -1,3 +1,9 @@
+## [2.8.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.7.0...2.8.0) (2025-07-17)
+
+### Features
+
+* replace PR workflow with reusable version ([#12](https://github.com/Knighten-Homelab/terraform-proxmox-vm/issues/12)) ([33493d4](https://github.com/Knighten-Homelab/terraform-proxmox-vm/commit/33493d42df0dcab948ef7948b6a170c2bded4338))
+
 ## [2.7.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.6.1...2.7.0) (2025-07-17)
 
 ### Features
