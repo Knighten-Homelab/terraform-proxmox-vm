@@ -1,3 +1,9 @@
+## [2.7.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.6.1...2.7.0) (2025-07-17)
+
+### Features
+
+* replace release workflow with reusable version and cleanup package.json ([#11](https://github.com/Knighten-Homelab/terraform-proxmox-vm/issues/11)) ([1cab76e](https://github.com/Knighten-Homelab/terraform-proxmox-vm/commit/1cab76e1f961dd28783b9834e7b9e3d87b818f8c))
+
 ## [2.6.1](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.6.0...2.6.1) (2025-07-10)
 
 
