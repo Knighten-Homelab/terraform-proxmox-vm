@@ -9,6 +9,9 @@ on:
       - reopened
       - synchronize
 
+permissions:
+  contents: read
+
 jobs:
   terraform-validation:
     uses: Knighten-Homelab/gha-reusable-workflows/.github/workflows/terraform-lint-and-security-scan.yaml@main
