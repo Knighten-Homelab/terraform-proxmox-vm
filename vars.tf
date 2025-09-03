@@ -140,7 +140,7 @@ variable "pve_networks" {
     {
       model  = "virtio"
       bridge = "vmbr0"
-      tag    = "-1"
+      tag    = "0"
       queues = "1"
     }
   ]
