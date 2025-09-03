@@ -18,6 +18,7 @@ resource "proxmox_vm_qemu" "pve_vm" {
   # Metadata Fields
   vmid = var.pve_id
   desc = var.pve_desc
+  tags = var.pve_tags != "" ? var.pve_tags : null
 
   # Template/Clone Fields
   full_clone = var.pve_is_clone ? var.pve_full_clone : null
