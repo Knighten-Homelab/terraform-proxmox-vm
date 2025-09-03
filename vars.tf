@@ -33,7 +33,7 @@ variable "pve_tags" {
   description = "tags for the VM (comma-separated values, e.g. 'web,production,ubuntu'). Tags may not start with '-' and may only include [a-z], [0-9], '_' and '-'"
   default     = ""
   validation {
-    condition = var.pve_tags == "" || can(regex("^[a-z0-9_][a-z0-9_-]*(?:,[a-z0-9_][a-z0-9_-]*)*$", var.pve_tags))
+    condition     = var.pve_tags == "" || can(regex("^[a-z0-9_][a-z0-9_-]*(?:,[a-z0-9_][a-z0-9_-]*)*$", var.pve_tags))
     error_message = "Tags must be comma-separated values. Each tag may not start with '-' and may only contain lowercase letters (a-z), numbers (0-9), underscores (_), and hyphens (-)."
   }
 }
