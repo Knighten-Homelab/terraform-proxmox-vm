@@ -1,3 +1,9 @@
+## [2.9.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.8.0...2.9.0) (2025-09-05)
+
+### Features
+
+* add VM tagging support ([#15](https://github.com/Knighten-Homelab/terraform-proxmox-vm/issues/15)) ([ab1fe3b](https://github.com/Knighten-Homelab/terraform-proxmox-vm/commit/ab1fe3b0ab1759c968b71f69cab9db9e327b515b))
+
 ## [2.8.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.7.0...2.8.0) (2025-07-17)
 
 ### Features
