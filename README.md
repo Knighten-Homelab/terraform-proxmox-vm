@@ -63,6 +63,7 @@ _See the [versions.tf](versions.tf) for more up to date details._
 | `pve_name` | name of the VM to create                     | `string` | n/a     |   yes    |
 | `pve_id`   | id of the VM                                 | `number` | `0`     |    no    |
 | `pve_desc` | description of the VM                        | `string` | `""`    |    no    |
+| `pve_tags` | tags for the VM (comma-separated values)     | `string` | `""`    |    no    |
 
 #### Cloning and Template Variables
 
@@ -183,6 +184,7 @@ module "test-vm" {
   pve_node = "node-alpha"
   pve_name = "test-vm"
   pve_id   = 400
+  pve_tags = "test,development,ubuntu"
 
   pve_is_clone = false
   pve_iso      = "local:iso/ubuntu-server-22-04.iso"
@@ -215,6 +217,7 @@ module "cloned-vm" {
   pve_node = "node-alpha"
   pve_name = "cloned-vm"
   pve_id   = 401
+  pve_tags = "production,web-server,database"
 
   pve_is_clone   = true
   pve_full_clone = true
