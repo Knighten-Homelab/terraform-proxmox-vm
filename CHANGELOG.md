@@ -1,3 +1,23 @@
+## [3.0.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.9.0...3.0.0) (2025-10-01)
+
+### ⚠ BREAKING CHANGES
+
+* Migrated from PowerDNS to HashiCorp DNS provider
+
+- Replace pan-net/powerdns provider with hashicorp/dns
+- Rename variables: pdns_zone -> dns_zone, pdns_record_name ->
+  dns_record_name, pdns_ttl -> dns_ttl
+- Update resource from powerdns_record to dns_a_record_set
+- Update outputs to reference new resource attributes
+- Update documentation to reflect provider changes
+
+Users must update their configurations to use the new variable
+names and configure the HashiCorp DNS provider.
+
+### Features
+
+* replace PowerDNS provider with HashiCorp DNS provider ([#16](https://github.com/Knighten-Homelab/terraform-proxmox-vm/issues/16)) ([d36dd61](https://github.com/Knighten-Homelab/terraform-proxmox-vm/commit/d36dd611497bcf189634ca16c7dd668c7fc68932))
+
 ## [2.9.0](https://github.com/Knighten-Homelab/terraform-proxmox-vm/compare/2.8.0...2.9.0) (2025-09-05)
 
 ### Features
