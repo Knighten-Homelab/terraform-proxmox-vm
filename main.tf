@@ -111,11 +111,10 @@ resource "proxmox_vm_qemu" "pve_vm" {
   }
 }
 
-resource "powerdns_record" "a_record" {
-  count   = var.create_dns_record ? 1 : 0
-  zone    = "${var.pdns_zone}."
-  name    = "${var.pdns_record_name}.${var.pdns_zone}."
-  type    = "A"
-  ttl     = var.pdns_ttl
-  records = [proxmox_vm_qemu.pve_vm.default_ipv4_address]
+resource "dns_a_record_set" "vm_a_record" {
+  count     = var.create_dns_record ? 1 : 0
+  zone      = var.dns_zone
+  name      = var.dns_record_name
+  ttl       = var.dns_ttl
+  addresses = [proxmox_vm_qemu.pve_vm.default_ipv4_address]
 }

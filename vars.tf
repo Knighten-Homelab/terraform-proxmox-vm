@@ -284,32 +284,32 @@ variable "pve_serial_id" {
   default     = 0
 }
 
-############
-# PowerDNS #
-############
+#######
+# DNS #
+#######
 
 variable "create_dns_record" {
   type        = bool
-  description = "whether to create a PowerDNS A record for the VM"
+  description = "whether to create a DNS A record for the VM"
   default     = true
 }
 
-variable "pdns_zone" {
+variable "dns_zone" {
   type        = string
-  description = "name of the PowerDNS zone to create the record in"
+  description = "name of the DNS zone to create the record in"
 }
 
-variable "pdns_record_name" {
+variable "dns_record_name" {
   type        = string
-  description = "name of the PowerDNS record to create"
+  description = "name of the DNS record to create"
 }
 
-variable "pdns_ttl" {
+variable "dns_ttl" {
   type        = number
-  description = "TTL (Time To Live) for the PowerDNS record in seconds"
+  description = "TTL (Time To Live) for the DNS record in seconds"
   default     = 60
   validation {
-    condition     = var.pdns_ttl >= 30 && var.pdns_ttl <= 86400
-    error_message = "pdns_ttl must be between 30 and 86400 seconds (24 hours)."
+    condition     = var.dns_ttl >= 30 && var.dns_ttl <= 86400
+    error_message = "dns_ttl must be between 30 and 86400 seconds (24 hours)."
   }
 }

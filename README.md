@@ -1,13 +1,13 @@
 # Homelab Proxmox VM Terraform Module
 
-Terraform module which creates a ProxMox VM and a PowerDNS A record.
+Terraform module which creates a ProxMox VM and a DNS A record.
 
 This module is designed to be used with the technology stack I utilize in my homelab. It assumes you are using the following technologies:
 
 - [Proxmox](https://www.proxmox.com/en/)
   - Hypervisor
-- [PowerDNS](https://www.powerdns.com/)
-  - DNS Server
+- DNS Server supporting RFC 2136 Dynamic Updates
+  - Examples: BIND, PowerDNS, Windows DNS, etc.
 
 The main goal of this module was to streamline my VM creation process by: providing sane default values and aiding service discovery via DNS. This module is not designed to be used by others as it is highly opinionated and tailored to my specific use case; however, it may be useful as a reference for others.
 
@@ -15,7 +15,7 @@ The main goal of this module was to streamline my VM creation process by: provid
 
 Here are some of the opinionated decisions made in this module (this is not an exhaustive list):
 
-- Technology Stack: Proxmox and PowerDNS
+- Technology Stack: Proxmox and DNS Server with RFC 2136 support
 - VM Configuration:
   - Limited Number of CPU Options
   - Cloud-Init Use
@@ -29,7 +29,7 @@ Here are some of the opinionated decisions made in this module (this is not an e
     - ide1 is the Cloud-Init Disk
 - DNS
   - Only Creates Single A Record
-  - TTL = 60 and Not Configurable
+  - Default TTL = 60 (Configurable)
 
 
 ## Requirements
@@ -42,10 +42,10 @@ This module requires Terraform 1.9.8 or later. It may be compatible with earlier
 
 The table below lists the providers required by this module.
 
-| Name     | Source           | Version     |
-| -------- | ---------------- | ----------- |
-| proxmox  | telmate/proxmox  | = 3.0.1-rc4 |
-| powerdns | pan-net/powerdns | = 1.5.0     |
+| Name    | Source          | Version     |
+| ------- | --------------- | ----------- |
+| proxmox | telmate/proxmox | = 3.0.1-rc4 |
+| dns     | hashicorp/dns   | ~> 3.4      |
 
 You most configure the above providers (URLs, credentials, ...) in your terraform configuration.
 
@@ -155,14 +155,16 @@ default = [
 | `pve_serial_type` | type of serial to add          | `string` | `socket` |    no    |
 | `pve_serial_id`   | id of the serial to add        | `number` | `0`      |    no    |
 
-### PowerDNS Variables
+### DNS Variables
 
 Currently only a single A record will be created.
 
-| Name               | Description                                       | Type     | Default | Required |
-| ------------------ | ------------------------------------------------- | -------- | ------- | :------: |
-| `pdns_zone`        | name of the PowerDNS zone to create the record in | `string` | n/a     |   yes    |
-| `pdns_record_name` | name of the PowerDNS record to create             | `string` | n/a     |   yes    |
+| Name                 | Description                                     | Type     | Default | Required |
+| -------------------- | ----------------------------------------------- | -------- | ------- | :------: |
+| `create_dns_record`  | whether to create a DNS A record for the VM     | `bool`   | `true`  |    no    |
+| `dns_zone`           | name of the DNS zone to create the record in    | `string` | n/a     |   yes    |
+| `dns_record_name`    | name of the DNS record to create                | `string` | n/a     |   yes    |
+| `dns_ttl`            | TTL (Time To Live) for the DNS record in seconds| `number` | `60`    |    no    |
 
 ## Outputs
 
@@ -171,7 +173,7 @@ Currently only a single A record will be created.
 | `vm_id`          | The ID of the Proxmox VM                   | `number`       | no        |
 | `vm_name`        | The name of the Proxmox VM                 | `string`       | no        |
 | `vm_ip_address`  | The default IPv4 address of the Proxmox VM | `string`       | no        |
-| `vm_dns_records` | The DNS records created in PowerDNS        | `list(string)` | no        |
+| `vm_dns_records` | The DNS A record addresses created         | `list(string)` | no        |
 
 ## Usage
 
@@ -203,8 +205,8 @@ module "test-vm" {
 
   pve_disk_size = "40G"
 
-  pdns_zone        = "homelab.lan"
-  pdns_record_name = "test-vm"
+  dns_zone        = "homelab.lan"
+  dns_record_name = "test-vm"
 }
 ```
 
@@ -244,7 +246,7 @@ module "cloned-vm" {
 
   pve_disk_size = "40G"
 
-  pdns_zone        = "homelab.lan"
-  pdns_record_name = "cloned-vm"
+  dns_zone        = "homelab.lan"
+  dns_record_name = "cloned-vm"
 }
 ```
